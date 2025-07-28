@@ -1,0 +1,45 @@
+.telegram-bg {
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.telegram-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.telegram-logo {
+  width: 80px;
+  height: auto;
+  margin: 0 auto 1rem auto;
+}
+
+.telegram-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.telegram-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.telegram-btn {
+  --background: #0088cc;
+  --border-radius: 10px;
+  --box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
+}
+
+.telegram-policy {
+  margin-top: 2rem;
+  font-size: 12px;
+  color: #999;
+}

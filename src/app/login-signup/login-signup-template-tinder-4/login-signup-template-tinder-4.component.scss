@@ -1,0 +1,44 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100%;
+  text-align: center;
+
+
+  .tinder-bg {
+  background: linear-gradient(to top, #ff5864, #ffb75e);
+  text-align: center;
+  color: white;
+}
+
+.tinder-logo {
+  font-size: 48px;
+  margin-top: 60px;
+}
+
+.tinder-title {
+  font-size: 24px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.tinder-subtitle {
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+.google-btn,
+.phone-btn {
+  margin: 10px 0;
+  border-radius: 12px;
+}
+
+.tinder-policy {
+  font-size: 12px;
+  margin-top: 30px;
+  padding: 0 20px;
+}
+
+}

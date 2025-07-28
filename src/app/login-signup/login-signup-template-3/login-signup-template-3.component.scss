@@ -1,0 +1,58 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100vh;
+
+  .title {
+    font-size: 45px;
+    color: #52bff7;
+
+    .light {
+      font-weight: 100;
+    }
+
+    .bold {
+      font-weight: bold;
+      margin-left: 15px;
+    }
+  }
+
+  .image {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 40px 0;
+    img {
+      border-radius: 50%;
+    }
+
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 0 40px;
+    max-width: 500px;
+    margin: 10px auto;
+    min-width: 300px;
+
+    ion-button:first-child {
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .facebook {
+      --background: #3b5998;
+    }
+
+    .google {
+      --background: #ff5733;
+    }
+  }
+}

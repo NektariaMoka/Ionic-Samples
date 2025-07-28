@@ -1,0 +1,213 @@
+<ion-content class="ion-padding">
+    <div class="main-section">
+        <ion-row class="row-section">
+            <div class="fire-logo">
+                <img src="assets/imgs/angularjs.png" class="img-logo">
+                <ion-text color="dark">
+                    <h2 class="ion-no-margin ion-margin-vertical ion-text-center">
+                        {{ isSignupMode ? 'Create Account' : 'Sign In' }}
+                    </h2>
+                </ion-text>
+            </div>
+        </ion-row>
+
+        <!-- Error Message -->
+        <ion-row *ngIf="generalError">
+            <ion-col>
+                <ion-text color="danger">
+                    <p class="error-text">{{ generalError }}</p>
+                </ion-text>
+            </ion-col>
+        </ion-row>
+
+        <div class="ion-padding">
+            <!-- First Name (Signup only) -->
+            <ion-row *ngIf="isSignupMode">
+                <ion-col>
+                    <ion-input
+                            clearInput
+                            type="text"
+                            placeholder="First Name"
+                            [(ngModel)]="firstName"
+                            class="input-field ion-padding-horizontal"
+                            clear-input="true"
+                            required>
+                    </ion-input>
+                </ion-col>
+            </ion-row>
+
+            <!-- Last Name (Signup only) -->
+            <ion-row *ngIf="isSignupMode">
+                <ion-col>
+                    <ion-input
+                            clearInput
+                            type="text"
+                            placeholder="Last Name"
+                            [(ngModel)]="lastName"
+                            class="input-field ion-padding-horizontal"
+                            clear-input="true"
+                            required>
+                    </ion-input>
+                </ion-col>
+            </ion-row>
+
+            <!-- Email Field -->
+            <ion-row>
+                <ion-col>
+                    <ion-input
+                            clearInput
+                            type="email"
+                            placeholder="Email"
+                            [(ngModel)]="email"
+                            class="input-field ion-padding-horizontal"
+                            clear-input="true"
+                            [class.error]="emailError"
+                            required>
+                    </ion-input>
+                    <ion-text color="danger" *ngIf="emailError">
+                        <p class="error-text">{{ emailError }}</p>
+                    </ion-text>
+                </ion-col>
+            </ion-row>
+
+            <!-- Password Field -->
+            <ion-row>
+                <ion-col>
+                    <ion-input
+                            clearInput
+                            type="password"
+                            placeholder="Password"
+                            [(ngModel)]="password"
+                            class="input-field ion-padding-horizontal"
+                            clear-input="true"
+                            [class.error]="passwordError"
+                            required>
+                    </ion-input>
+                    <ion-text color="danger" *ngIf="passwordError">
+                        <p class="error-text">{{ passwordError }}</p>
+                    </ion-text>
+                </ion-col>
+            </ion-row>
+
+            <!-- Confirm Password Field (only for signup) -->
+            <ion-row *ngIf="isSignupMode">
+                <ion-col>
+                    <ion-input
+                            clearInput
+                            type="password"
+                            placeholder="Confirm Password"
+                            [(ngModel)]="confirmPassword"
+                            class="input-field ion-padding-horizontal"
+                            clear-input="true"
+                            [class.error]="confirmPasswordError"
+                            required>
+                    </ion-input>
+                    <ion-text color="danger" *ngIf="confirmPasswordError">
+                        <p class="error-text">{{ confirmPasswordError }}</p>
+                    </ion-text>
+                </ion-col>
+            </ion-row>
+
+            <!-- Terms Agreement (Signup only) -->
+            <ion-row *ngIf="isSignupMode">
+                <ion-col>
+                    <ion-item lines="none" class="terms-item">
+                        <ion-checkbox [(ngModel)]="agreeToTerms" slot="start"></ion-checkbox>
+                        <ion-label class="terms-label">
+                            I agree to the <a href="#" class="terms-link">Terms and Conditions</a>
+                        </ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+
+            <!-- Forgot Password (Signin only) -->
+            <ion-row *ngIf="!isSignupMode">
+                <ion-col>
+                    <ion-text
+                            color="medium"
+                            class="ion-float-end clickable"
+                            (click)="forgotPassword()">
+                        <h6 class="small-text ion-no-margin ion-text-end">Forgot Password?</h6>
+                    </ion-text>
+                </ion-col>
+            </ion-row>
+
+            <!-- Main Action Button -->
+            <ion-row>
+                <ion-col>
+                    <ion-button
+                            expand="block"
+                            (click)="onSubmit()"
+                            color="undefined"
+                            class="btn-transition">
+                        <strong class="ion-color-light">
+                            {{ isSignupMode ? 'Create Account' : 'Sign In' }}
+                        </strong>
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+
+            <div class="line"></div>
+
+            <!-- Toggle Mode Button -->
+            <ion-row>
+                <ion-col>
+                    <ion-button
+                            expand="block"
+                            fill="outline"
+                            color="undefined"
+                            (click)="toggleMode()"
+                            class="btn-color">
+                        <strong>
+                            {{ isSignupMode ? 'Already have an account? Sign In' : 'New? Create an Account' }}
+                        </strong>
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+
+            <!-- Social Login Placeholders -->
+            <ion-row>
+                <ion-col>
+                    <!-- Facebook login placeholder -->
+                    <ion-button expand="block" fill="outline" color="primary" disabled>
+                        <ion-icon name="logo-facebook" slot="start"></ion-icon>
+                        Continue with Facebook
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <!-- Google login placeholder -->
+                    <ion-button expand="block" fill="outline" color="danger" disabled>
+                        <ion-icon name="logo-google" slot="start"></ion-icon>
+                        Continue with Google
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <!-- Twitter login placeholder -->
+                    <ion-button expand="block" fill="outline" color="dark" disabled>
+                        <ion-icon name="logo-twitter" slot="start"></ion-icon>
+                        Continue with Twitter
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+
+            <!-- Anonymous Sign In -->
+            <ion-row>
+                <ion-col>
+                    <ion-button
+                            expand="block"
+                            (click)="signInAnonymously()"
+                            color="medium"
+                            fill="outline"
+                            class="anonymous-btn">
+                        <ion-icon name="person-outline" slot="start"></ion-icon>
+                        <strong>Continue as Guest</strong>
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+        </div>
+    </div>
+</ion-content>

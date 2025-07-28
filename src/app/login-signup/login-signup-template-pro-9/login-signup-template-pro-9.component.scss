@@ -1,0 +1,43 @@
+ion-content {
+  --background: #fff url("/assets/bg/sfondo_home.png") no-repeat center center / cover;
+  --background-size: cover;
+}
+.gridImg {
+  top: 10%;
+  position: relative;
+}
+.labelText {
+  text-align: center;
+}
+.footer {
+  font-size: 13px;
+  --ion-item-background: transparent;
+  margin: 0 20px 0 20px;
+  color: #0d0d0d;
+}
+ion-footer {
+  border: 0px !important;
+  border-bottom-color: transparent !important;
+  background-image: none !important;
+  border-bottom: none !important;
+}
+ion-toolbar {
+  --background: transparent;
+  --ion-color-base: transparent !important;
+}
+
+.gridLabel {
+  margin: 20px 20px 5px 20px;
+  border-radius: 20px;
+  font-weight: bolder;
+}
+
+.lang {
+  --background: transparent;
+  color: white;
+}
+
+ion-select {
+  --placeholder-opacity: 1 !important;
+  color: white;
+}

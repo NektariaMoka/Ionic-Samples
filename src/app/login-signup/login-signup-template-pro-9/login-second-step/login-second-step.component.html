@@ -1,0 +1,166 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item>
+      <ion-button fill="white" (click)="goBack()">
+        <ion-icon icon="assets/icon/icona_indietro.svg"></ion-icon
+        ><ion-label class="ion-margin-start">Back</ion-label>
+      </ion-button>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="registrationForm">
+    @if (showRecoverPass) {
+      <ion-item data-test="login-email" lines="none" class="light">
+        <ion-icon name="mail-outline"></ion-icon>
+        <ion-input
+          id="firstName"
+          placeholder=" Email"
+          formControlName="v_email"
+          type="text"
+          required="true"
+        >
+        </ion-input>
+      </ion-item>
+      <ion-item data-test="login-password" lines="none" class="light">
+        <ion-icon name="key-outline"></ion-icon>
+        <ion-input
+          placeholder=" Password"
+          formControlName="v_password_user"
+          type="text"
+          required="true"
+        >
+        </ion-input>
+      </ion-item>
+    }
+
+    @if (!showValidation && showRecoverPass) {
+      <ion-item
+        data-test="show-validation-for-mail-pass"
+        color="transparent"
+        class="ion-text-center"
+      >
+        <ion-label color="danger">
+          Please fill a valid email and password.
+        </ion-label>
+      </ion-item>
+    }
+
+    @if (!showRecoverPass) {
+      <ion-item lines="none" class="light mt-5">
+        <ion-icon name="mail-outline"></ion-icon>
+        <ion-input
+          id="firstName"
+          placeholder="Email"
+          formControlName="v_email"
+          type="text"
+          required="true"
+        >
+        </ion-input>
+      </ion-item>
+      <ion-item
+        class="gridLabel mt-5"
+        (click)="recoverPass()"
+        color="primary"
+        [disabled]="registrationForm.get('v_email')?.hasError('required')"
+      >
+        <ion-button fill="outline" expand="full" class="btnIon" slot="start">
+          <ion-icon
+            style="zoom: 2"
+            class="IconBtn"
+            icon="assets/icon/login-svg.svg"
+          ></ion-icon>
+        </ion-button>
+        <ion-label class="labelText">Recover Password</ion-label>
+      </ion-item>
+    }
+
+      @if (showRecoverPass) {
+        <ion-item
+          class="gridLabel"
+          (click)="loginUser()"
+          color="primary"
+          [disabled]="!showValidation"
+        >
+          <ion-button fill="outline" expand="full" class="btnIon" slot="start">
+            <ion-icon
+              style="zoom: 2"
+              class="IconBtn"
+              icon="assets/icon/login-svg.svg"
+            ></ion-icon>
+          </ion-button>
+          <ion-label class="labelText"> Login</ion-label>
+        </ion-item>
+
+        <ion-item
+          class="gridLabel"
+          (click)="registerNewUser()"
+          color="primary"
+          [disabled]="!showValidation"
+        >
+          <ion-button fill="outline" expand="full" class="btnIon" slot="start">
+            <ion-icon
+              style="zoom: 2"
+              class="IconBtn"
+              icon="assets/icon/add-user.svg"
+            ></ion-icon>
+          </ion-button>
+          <ion-label class="labelText"> {{ "Register" }}</ion-label>
+        </ion-item>
+      }
+
+    @if (!showRecoverPass) {
+      <p style="color: #ea6153; text-align: center; margin: 8px">
+        {{
+          "Please fill a valid email. You will receive your password through email."
+        }}
+      </p>
+    }
+  </form>
+  @if (showRecoverPass) {
+    <ion-item class="gridLabel" (click)="connectWithGoogle()">
+      <ion-button fill="clear" expand="full" class="btnIon" slot="start">
+        <ion-icon
+          style="zoom: 2"
+          class="IconBtn"
+          icon="assets/icon/icons8-google.svg"
+        ></ion-icon>
+      </ion-button>
+      <ion-label class="labelText"> {{ "Log in with Google" }}</ion-label>
+    </ion-item>
+    <ion-item class="gridLabel" (click)="connectWithIphone()">
+      <ion-button fill="clear" expand="full" class="btnIon" slot="start">
+        <ion-icon
+          slot="icon-only"
+          style="zoom: 2"
+          class="IconBtn"
+          icon="assets/icon/logo-apple.svg"
+        ></ion-icon>
+      </ion-button>
+      <ion-label class="labelText"> {{ "Log in with Iphone" }}</ion-label>
+    </ion-item>
+  }
+</ion-content>
+<ion-footer
+  class="ion-no-border"
+  style="position: absolute; bottom: -10px; text-align: center"
+>
+  <ion-toolbar>
+    @if (showRecoverPass) {
+      <ion-list lines="none">
+        <ion-label> Did you forgot your password? </ion-label>
+        <p style="font-weight: bold">
+          <a (click)="forgotPass()"> Recover Password</a>
+        </p>
+      </ion-list>
+    }
+
+    @if (!showRecoverPass) {
+      <ion-list lines="none" class="mb-5" style="font-weight: bold">
+        <ion-label (click)="forgotPass()">
+          <a (click)="forgotPass()"> Login/Register </a>
+        </ion-label>
+      </ion-list>
+    }
+  </ion-toolbar>
+</ion-footer>

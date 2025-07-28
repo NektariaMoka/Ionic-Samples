@@ -1,0 +1,51 @@
+.insta-bg {
+  background: #fafafa;
+}
+
+.insta-container {
+  padding: 2rem;
+  max-width: 360px;
+  margin: auto;
+  text-align: center;
+}
+
+.insta-logo {
+  font-family: 'Billabong', cursive;
+  font-size: 40px;
+  margin-bottom: 30px;
+}
+
+.insta-btn {
+  --background: #3897f0;
+  border-radius: 10px;
+}
+
+.fb-login {
+  color: #385185;
+  font-weight: 500;
+}
+
+.divider {
+  margin: 20px 0;
+  position: relative;
+  text-align: center;
+  color: #888;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: #ccc;
+}
+
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+}

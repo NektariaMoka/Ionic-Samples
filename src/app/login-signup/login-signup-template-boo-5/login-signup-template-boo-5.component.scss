@@ -1,0 +1,31 @@
+.boo-bg {
+  background: radial-gradient(circle at top, #a18cd1 0%, #fbc2eb 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.boo-container {
+  padding: 2rem;
+  width: 100%;
+  max-width: 360px;
+  color: white;
+  text-align: center;
+}
+
+.boo-logo {
+  width: 80px;
+  margin-bottom: 20px;
+  align-self: center;
+}
+
+.neon-btn {
+  --background: #6f00ff;
+  --box-shadow: 0 0 8px #c56fff;
+  border-radius: 14px;
+}
+
+.signup-link {
+  font-size: 13px;
+  margin-top: 20px;
+}

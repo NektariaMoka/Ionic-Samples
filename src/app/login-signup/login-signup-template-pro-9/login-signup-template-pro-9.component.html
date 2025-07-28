@@ -1,0 +1,41 @@
+<ion-content class="ion-padding">
+  <ion-item class="lang">
+    <ion-select
+      value="en"
+      placeholder="English"
+      label="Language / Γλώσσα">
+      <ion-select-option value="gr">Ελληνικά</ion-select-option>
+      <ion-select-option value="en">English</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-grid class="gridImg">
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col>
+        <ion-img
+          style="width: 350px"
+          src="assets/bg/world-bg.png"
+        ></ion-img>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer
+  class="ion-no-border"
+  style="position: absolute; left: 0; bottom: 20px; right: 0"
+>
+  <ion-item routerLink="/login-signup/login-second-step" class="gridLabel" >
+    <ion-label class="labelText" >{{
+        "Login as User"
+      }}</ion-label>
+  </ion-item>
+  <ion-toolbar>
+    <ion-item class="footer ion-text-center" lines="none" >
+      <ion-label style="white-space: break-spaces !important">{{
+          "By logging in, you are agreeing to our Terms of Use and Privacy Policy"
+
+        }}</ion-label>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>
