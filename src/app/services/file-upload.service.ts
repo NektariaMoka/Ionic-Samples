@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   Storage,
   ref,
@@ -16,7 +16,7 @@ import { LoadingService } from './loading.service';
 export class FileUploadService {
   private uploadProgressSubject = new Subject<number>();
   public uploadProgress$ = this.uploadProgressSubject.asObservable();
-
+  private storage = inject(Storage);
   // File size limits (in bytes)
   private readonly MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
   private readonly MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -35,10 +35,7 @@ export class FileUploadService {
     'text/plain',
   ];
 
-  constructor(
-    private storage: Storage,
-    private loadingService: LoadingService,
-  ) {}
+  constructor() {}
 
   async uploadProfileImage(
     userId: string,

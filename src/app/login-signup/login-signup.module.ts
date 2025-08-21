@@ -83,8 +83,6 @@ export const LoginSignupRoutes = [
 ];
 
 @NgModule({
-  declarations: [],
-  providers: [],
   imports: [CommonModule, RouterModule.forChild(LoginSignupRoutes)],
 })
 export class LoginSignupModule {}

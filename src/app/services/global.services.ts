@@ -1,7 +1,9 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 
 @Injectable()
 export class GlobalService {
+  private toastController = inject(ToastController);
   checkEmail(email: string) {
     if (email) {
       let patternEmail =
@@ -10,5 +12,23 @@ export class GlobalService {
     } else {
       return false;
     }
+  }
+
+  async presentToast(message: string, position: any, duration: number) {
+    const toast = await this.toastController.create({
+      message,
+      buttons: [
+        {
+          text: 'Close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Close clicked');
+          },
+        },
+      ],
+      position,
+      duration,
+    });
+    toast.present();
   }
 }

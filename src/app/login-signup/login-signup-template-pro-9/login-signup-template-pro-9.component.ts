@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -9,10 +9,8 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['./login-signup-template-pro-9.component.scss'],
   imports: [IonicModule, FormsModule, RouterLink],
 })
-export class LoginSignupTemplatePro9Component implements OnInit {
+export class LoginSignupTemplatePro9Component {
   language: any;
   dark: any;
   constructor() {}
-
-  ngOnInit() {}
 }

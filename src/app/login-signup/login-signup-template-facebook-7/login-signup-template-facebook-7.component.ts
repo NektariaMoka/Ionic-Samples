@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -7,8 +7,6 @@ import { IonicModule } from '@ionic/angular';
   styleUrls: ['./login-signup-template-facebook-7.component.scss'],
   imports: [IonicModule],
 })
-export class LoginSignupTemplateFacebook7Component implements OnInit {
+export class LoginSignupTemplateFacebook7Component {
   constructor() {}
-
-  ngOnInit() {}
 }

@@ -73,3 +73,4 @@ src/environments/environment.ts
 src/environments/environment.prod.ts
 /src/environments/
 .env
+/package-lock.json

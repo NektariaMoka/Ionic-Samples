@@ -7,7 +7,15 @@ export const routes: Routes = [
   },
   {
     path: 'login-signup',
-    loadChildren: () => import('./login-signup/login-signup.module').then(m=>m.LoginSignupModule)
+    loadChildren: () =>
+      import('./login-signup/login-signup.module').then(
+        (m) => m.LoginSignupModule,
+      ),
+  },
+  {
+    path: 'payments',
+    loadChildren: () =>
+      import('./payments/payments.module').then((m) => m.PaymentsModule),
   },
   {
     path: '',
