@@ -29,6 +29,8 @@ For iOS builds, you'll need an Apple system with (latest) Xcode.
     Modern frontend tooling: SCSS theming, Angular CLI, ESLint
 
 ### On Progress Features
+* Login & Signup
+* Payment gateways (Stripe)
 * Profile
 * Settings
 * Notifications
