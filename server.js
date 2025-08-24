@@ -1,8 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const Stripe = require("stripe");
 
-const stripe = new Stripe(process.env.STRIPE_PK || "sk_test_xxx", {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_xxx", {
   apiVersion: "2024-06-20", // or latest
 });
 
@@ -65,7 +66,9 @@ app.post("/create-payment-intent", async (req, res) => {
   }
 });
 
-const port = process.env.PORT || 4242;
-app.listen(port, () =>
-  console.log(`Server running on http://localhost:${port}`),
+app.listen(4242, () =>
+  console.log(
+    "Server running on http://localhost:4242",
+    process.env.STRIPE_SECRET_KEY,
+  ),
 );

@@ -12,24 +12,14 @@
 <ion-content>
 
   <ion-card class="welcome-card">
-    <ion-img src="assets/stripe.png"></ion-img>
     <ion-card-header>
-      <ion-card-subtitle>Get Started</ion-card-subtitle>
-      <ion-card-title>Stripe Sample</ion-card-title>
-      <ion-row>
-        <ion-col>
-          Total Payment
-        </ion-col>
-        <ion-col>
-          {{currencyIcon}}{{paymentAmount/100}}
-        </ion-col>
-      </ion-row>
+      <ion-card-title>Stripe Sample PaymentSheet & PWA</ion-card-title>
     </ion-card-header>
     <ion-card-content class="stripeBtn">
-      <ion-button expand="full" color="success" (click)="createPaymentSheet()">Proceed</ion-button>
-      <ion-text class="ion-text-center ion-text-small">
-        <p>Stripe payment</p>
-      </ion-text>
+          <ion-label class="ion-text-center">
+        <h3>Stripe payment for native</h3>
+      </ion-label>
+        <ion-button  expand="full" class="ion-text-center" slot="center" color="success" (click)="createPaymentSheet()">Proceed</ion-button> 
     </ion-card-content>
   </ion-card>
   <ion-item class="cordova-info">

@@ -3,7 +3,7 @@ import { Stripe } from '@capacitor-community/stripe';
 
 @Injectable()
 export class StripeService {
-  async pay(amount = 1999) {
+  async pay(amount = 1000) {
     // 1) Fetch PaymentSheet data from your Node server
     const resp = await fetch('http://localhost:4242/paymentsheet', {
       method: 'POST',

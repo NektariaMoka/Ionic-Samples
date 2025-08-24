@@ -4,6 +4,7 @@ import { PaymentSheetEventsEnum, Stripe } from '@capacitor-community/stripe';
 import { GlobalService } from '../../services/global.services';
 import { environment } from '../../../environments/environment';
 import { CapacitorHttp, HttpResponse } from '@capacitor/core';
+import { Capacitor } from '@capacitor/core';
 @Component({
   selector: 'app-stripe-pay',
   templateUrl: './stripe-pay.component.html',
@@ -21,13 +22,13 @@ export class StripePayComponent {
   public GROUP_SEPARATOR: string;
 
   constructor() {
-    this.paymentAmount = 0.1;
+    this.paymentAmount = 100;
     this.currency = 'USD';
     this.currencyIcon = '$';
     this.cardDetails = {};
     this.GROUP_SEPARATOR = ' ';
     Stripe.initialize({
-      publishableKey: environment.STRIPE_PK,
+      publishableKey: environment.STRIPE_SK,
     });
     Stripe.addListener(PaymentSheetEventsEnum.Completed, () => {
       console.log('Payment completed');
@@ -54,19 +55,12 @@ export class StripePayComponent {
     }
   }
 
-  presentPaymentSheet() {
-    console.log('Present payment sheet');
-    Stripe.presentPaymentSheet().then((result) => {
-      console.log(result);
-    });
-  }
-
   async createPaymentSheet() {
     /**
      * Connect to your backend endpoint, and get every key.
      */
     const options = {
-      url: 'https://us-central1-ionic4fullapp.cloudfunctions.net/paymentsheet',
+      url: 'http://localhost:4242/paymentsheet',
       headers: { 'Content-Type': 'application/json' },
       data: { amount: this.paymentAmount, currency: this.currency },
     };
@@ -84,6 +78,12 @@ export class StripePayComponent {
       merchantDisplayName: 'Capacitor Full App',
     }).then(() => {
       this.presentPaymentSheet();
+    });
+  }
+  presentPaymentSheet() {
+    console.log('Present payment sheet');
+    Stripe.presentPaymentSheet().then((result) => {
+      console.log(result);
     });
   }
 }
