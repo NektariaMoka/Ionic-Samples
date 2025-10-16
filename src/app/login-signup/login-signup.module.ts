@@ -4,6 +4,13 @@ import { RouterModule } from '@angular/router';
 
 export const LoginSignupRoutes = [
   {
+    path: '',
+    loadComponent: () =>
+      import('./login-signup-swiper/login-signup-swiper.component').then(
+        (c) => c.LoginSignupSwiperComponent,
+      ),
+  },
+  {
     path: 'template-1',
     loadComponent: () =>
       import(
