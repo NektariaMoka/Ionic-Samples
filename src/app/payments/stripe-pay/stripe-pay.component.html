@@ -1,33 +1,137 @@
 <ion-header>
-  <ion-toolbar >
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Stripe Payment
+      Payment Methods
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
-  <ion-card class="welcome-card">
+<ion-content class="ion-padding">
+  <!-- Payment Amount Section -->
+  <ion-card>
     <ion-card-header>
-      <ion-card-title>Stripe Sample PaymentSheet & PWA</ion-card-title>
+      <ion-card-title>Payment Details</ion-card-title>
     </ion-card-header>
-    <ion-card-content class="stripeBtn">
-          <ion-label class="ion-text-center">
-        <h3>Stripe payment for native</h3>
-      </ion-label>
-        <ion-button  expand="full" class="ion-text-center" slot="center" color="success" (click)="createPaymentSheet()">Proceed</ion-button> 
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Amount</ion-label>
+        <ion-input 
+          type="number" 
+          [(ngModel)]="paymentAmount" 
+          placeholder="Enter amount"
+          min="1"
+          max="999999">
+        </ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="stacked">Currency</ion-label>
+        <ion-select [(ngModel)]="currency" placeholder="Select currency">
+          <ion-select-option value="USD">USD - US Dollar</ion-select-option>
+          <ion-select-option value="EUR">EUR - Euro</ion-select-option>
+          <ion-select-option value="GBP">GBP - British Pound</ion-select-option>
+          <ion-select-option value="CAD">CAD - Canadian Dollar</ion-select-option>
+        </ion-select>
+      </ion-item>
     </ion-card-content>
   </ion-card>
-  <ion-item class="cordova-info">
-    <ion-icon slot="start" name="information-circle-outline" color="primary"></ion-icon>
-    <ion-label>
-      <ion-text>
-        <p>After receiving the token, the payment request is made from server.
-      </ion-text>
-    </ion-label>
-  </ion-item>
+
+  <!-- Payment Methods Section -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Choose Payment Method</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <!-- Stripe Payment -->
+      <ion-item button (click)="createPaymentSheet()" class="payment-method-item">
+        <ion-icon name="card-outline" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h2>Credit/Debit Card</h2>
+          <p>Pay with Visa, Mastercard, or other cards</p>
+        </ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+
+      <!-- Apple Pay (if available) -->
+      <ion-item button (click)="handleApplePay()" class="payment-method-item">
+        <ion-icon name="logo-apple" slot="start" color="dark"></ion-icon>
+        <ion-label>
+          <h2>Apple Pay</h2>
+          <p>Pay with Touch ID or Face ID</p>
+        </ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+
+      <!-- Google Pay (if available) -->
+      <ion-item button (click)="handleGooglePay()" class="payment-method-item">
+        <ion-icon name="logo-google" slot="start" color="danger"></ion-icon>
+        <ion-label>
+          <h2>Google Pay</h2>
+          <p>Pay with your Google account</p>
+        </ion-label>
+        <ion-icon name="chevron-forward" slot="end"></ion-icon>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Payment Summary -->
+  <ion-card *ngIf="paymentAmount > 0">
+    <ion-card-header>
+      <ion-card-title>Payment Summary</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Amount</ion-label>
+        <ion-note slot="end">{{currencyIcon}}{{paymentAmount | number:'1.2-2'}}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Currency</ion-label>
+        <ion-note slot="end">{{currency}}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Processing Fee</ion-label>
+        <ion-note slot="end">Included</ion-note>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Payment History Section -->
+  <ion-card *ngIf="paymentHistory.length > 0">
+    <ion-card-header>
+      <ion-card-title>Recent Payments</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let payment of paymentHistory; let i = index" [class]="i === 0 ? 'recent-payment' : ''">
+          <ion-icon 
+            [name]="payment.status === 'completed' ? 'checkmark-circle' : 'close-circle'" 
+            [color]="payment.status === 'completed' ? 'success' : 'danger'"
+            slot="start">
+          </ion-icon>
+          <ion-label>
+            <h3>{{payment.currencyIcon}}{{payment.amount | number:'1.2-2'}} {{payment.currency}}</h3>
+            <p>{{payment.timestamp | date:'short'}} • {{payment.method | titlecase}}</p>
+          </ion-label>
+          <ion-note slot="end" [color]="payment.status === 'completed' ? 'success' : 'danger'">
+            {{payment.status | titlecase}}
+          </ion-note>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Information Card -->
+  <ion-card>
+    <ion-item>
+      <ion-icon slot="start" name="information-circle-outline" color="primary"></ion-icon>
+      <ion-label>
+        <ion-text>
+          <p>Secure payment processing powered by Stripe. Your payment information is encrypted and secure.</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-card>
 </ion-content>

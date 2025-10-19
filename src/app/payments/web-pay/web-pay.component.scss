@@ -1,19 +1,23 @@
-.payment-method-item {
-  --padding-start: 16px;
-  --padding-end: 16px;
-  margin-bottom: 8px;
-  border-radius: 8px;
+#payment-element {
+  margin: 16px 0;
+  padding: 16px;
   border: 1px solid var(--ion-color-light);
-  
-  &:hover {
-    background-color: var(--ion-color-light);
-  }
+  border-radius: 8px;
+  background: var(--ion-color-light-tint);
 }
 
-.recent-payment {
-  --background: var(--ion-color-light);
-  border-radius: 8px;
-  margin-bottom: 4px;
+.error-message {
+  color: var(--ion-color-danger);
+  font-size: 14px;
+  margin-top: 8px;
+  padding: 8px;
+  background: var(--ion-color-danger-tint);
+  border-radius: 4px;
+  display: none;
+}
+
+.error-message:not(:empty) {
+  display: block;
 }
 
 ion-card {
@@ -71,27 +75,14 @@ ion-note {
   z-index: 1000;
 }
 
-// Payment method icons
-ion-icon[name="card-outline"] {
-  font-size: 24px;
-}
-
-ion-icon[name="logo-apple"] {
-  font-size: 24px;
-}
-
-ion-icon[name="logo-google"] {
-  font-size: 24px;
-}
-
 // Responsive design
 @media (max-width: 768px) {
   ion-card {
     margin: 8px;
   }
   
-  .payment-method-item {
-    --padding-start: 12px;
-    --padding-end: 12px;
+  #payment-element {
+    margin: 12px 0;
+    padding: 12px;
   }
 }
