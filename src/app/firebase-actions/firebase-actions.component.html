@@ -1,3 +1,329 @@
-<p>
-  firebase-actions works!
-</p>
+<ion-content class="crud-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <ion-toolbar>
+      <ion-title>Firebase CRUD & File Upload</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="showCreateForm()" fill="solid" color="primary">
+          <ion-icon name="add" slot="start"></ion-icon>
+          Add Item
+        </ion-button>
+        <ion-button (click)="toggleFilters()" fill="outline" color="medium">
+          <ion-icon name="filter" slot="start"></ion-icon>
+          Filters
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </div>
+
+  <!-- Filter Section -->
+  <ion-card *ngIf="showFilters" class="filter-card">
+    <ion-card-header>
+      <ion-card-title>Filters & Search</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" size-md="6">
+            <ion-item>
+              <ion-label position="stacked">Search</ion-label>
+              <ion-input 
+                placeholder="Search by title, description, or tags..."
+                (ionInput)="onSearchChange($event)"
+                [value]="filter.searchTerm">
+              </ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-md="3">
+            <ion-item>
+              <ion-label position="stacked">Category</ion-label>
+              <ion-select 
+                placeholder="Select category"
+                (ionChange)="onCategoryChange($event)"
+                [value]="filter.category">
+                <ion-select-option value="">All Categories</ion-select-option>
+                <ion-select-option *ngFor="let category of categories" [value]="category">
+                  {{ category }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12" size-md="3">
+            <ion-item>
+              <ion-label position="stacked">Priority</ion-label>
+              <ion-select 
+                placeholder="Select priority"
+                (ionChange)="onPriorityChange($event)"
+                [value]="filter.priority">
+                <ion-select-option value="">All Priorities</ion-select-option>
+                <ion-select-option value="low">Low ({{ priorityCounts['low'] || 0 }})</ion-select-option>
+                <ion-select-option value="medium">Medium ({{ priorityCounts['medium'] || 0 }})</ion-select-option>
+                <ion-select-option value="high">High ({{ priorityCounts['high'] || 0 }})</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <ion-checkbox 
+                (ionChange)="onActiveChange($event)"
+                [checked]="filter.isActive">
+              </ion-checkbox>
+              <ion-label>Show only active items</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <ion-button (click)="clearFilters()" fill="outline" color="medium">
+              Clear Filters
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- CRUD Form Modal -->
+  <ion-modal [isOpen]="showForm" (didDismiss)="hideForm()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>{{ isEditing ? 'Edit Item' : 'Create New Item' }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="hideForm()">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      
+      <ion-content class="form-content">
+        <form [formGroup]="crudForm" (ngSubmit)="onSubmit()">
+          <ion-card>
+            <ion-card-content>
+              <!-- Basic Information -->
+              <ion-item>
+                <ion-label position="stacked">Title *</ion-label>
+                <ion-input 
+                  formControlName="title"
+                  placeholder="Enter item title"
+                  [class.ion-invalid]="crudForm.get('title')?.invalid && crudForm.get('title')?.touched">
+                </ion-input>
+              </ion-item>
+              <ion-note *ngIf="crudForm.get('title')?.invalid && crudForm.get('title')?.touched" color="danger">
+                Title must be at least 3 characters long
+              </ion-note>
+
+              <ion-item>
+                <ion-label position="stacked">Description *</ion-label>
+                <ion-textarea 
+                  formControlName="description"
+                  placeholder="Enter item description"
+                  rows="4"
+                  [class.ion-invalid]="crudForm.get('description')?.invalid && crudForm.get('description')?.touched">
+                </ion-textarea>
+              </ion-item>
+              <ion-note *ngIf="crudForm.get('description')?.invalid && crudForm.get('description')?.touched" color="danger">
+                Description must be at least 10 characters long
+              </ion-note>
+
+              <ion-item>
+                <ion-label position="stacked">Category *</ion-label>
+                <ion-input 
+                  formControlName="category"
+                  placeholder="Enter or select category"
+                  list="categories">
+                </ion-input>
+                <datalist id="categories">
+                  <option *ngFor="let category of categories" [value]="category">
+                </datalist>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked">Tags</ion-label>
+                <ion-input 
+                  formControlName="tags"
+                  placeholder="Enter tags separated by commas">
+                </ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked">Priority</ion-label>
+                <ion-select formControlName="priority">
+                  <ion-select-option value="low">Low</ion-select-option>
+                  <ion-select-option value="medium">Medium</ion-select-option>
+                  <ion-select-option value="high">High</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-checkbox formControlName="isActive"></ion-checkbox>
+                <ion-label>Active</ion-label>
+              </ion-item>
+
+              <!-- File Upload Section -->
+              <div class="file-upload-section">
+                <ion-label class="file-upload-label">Attach Files</ion-label>
+                
+                <div class="file-input-container">
+                  <input 
+                    type="file" 
+                    id="fileInput" 
+                    multiple 
+                    accept="image/*,.pdf,.doc,.docx,.txt"
+                    (change)="onFileSelected($event)"
+                    style="display: none;">
+                  <ion-button 
+                    fill="outline" 
+                    color="primary" 
+                    (click)="document.getElementById('fileInput')?.click()">
+                    <ion-icon name="cloud-upload" slot="start"></ion-icon>
+                    Choose Files
+                  </ion-button>
+                </div>
+
+                <!-- Upload Progress -->
+                <div *ngIf="isUploading" class="upload-progress">
+                  <ion-progress-bar [value]="uploadProgress / 100"></ion-progress-bar>
+                  <ion-note>{{ uploadProgress | number:'1.0-0' }}% uploaded</ion-note>
+                </div>
+
+                <!-- File Previews -->
+                <div *ngIf="previewFiles.length > 0" class="file-previews">
+                  <div *ngFor="let preview of previewFiles; let i = index" class="file-preview">
+                    <div class="file-info">
+                      <span class="file-icon">{{ preview.preview }}</span>
+                      <div class="file-details">
+                        <div class="file-name">{{ preview.file.name }}</div>
+                        <div class="file-size">{{ getFileSize(preview.file.size) }}</div>
+                      </div>
+                    </div>
+                    <ion-button 
+                      fill="clear" 
+                      color="danger" 
+                      size="small"
+                      (click)="removeFile(i)">
+                      <ion-icon name="close"></ion-icon>
+                    </ion-button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Form Actions -->
+              <div class="form-actions">
+                <ion-button 
+                  type="submit" 
+                  [disabled]="crudForm.invalid || isUploading"
+                  expand="block">
+                  {{ isEditing ? 'Update Item' : 'Create Item' }}
+                </ion-button>
+                <ion-button 
+                  type="button" 
+                  fill="outline" 
+                  expand="block"
+                  (click)="hideForm()">
+                  Cancel
+                </ion-button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Items List -->
+  <div class="items-container">
+    <ion-card *ngFor="let item of filteredItems; trackBy: trackByItemId" class="item-card">
+      <ion-card-header>
+        <div class="item-header">
+          <div class="item-title-section">
+            <ion-card-title>{{ item.title }}</ion-card-title>
+            <ion-chip [color]="getPriorityColor(item.priority)" class="priority-chip">
+              {{ item.priority | titlecase }}
+            </ion-chip>
+            <ion-chip [color]="item.isActive ? 'success' : 'medium'" class="status-chip">
+              {{ item.isActive ? 'Active' : 'Inactive' }}
+            </ion-chip>
+          </div>
+          <div class="item-actions">
+            <ion-button 
+              fill="clear" 
+              size="small"
+              (click)="showEditForm(item)">
+              <ion-icon name="create"></ion-icon>
+            </ion-button>
+            <ion-button 
+              fill="clear" 
+              size="small" 
+              color="danger"
+              (click)="deleteItem(item)">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+        <ion-card-subtitle>{{ item.category }}</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p class="item-description">{{ item.description }}</p>
+        
+        <!-- Tags -->
+        <div *ngIf="item.tags && item.tags.length > 0" class="tags-container">
+          <ion-chip *ngFor="let tag of item.tags" size="small" color="light">
+            {{ tag }}
+          </ion-chip>
+        </div>
+
+        <!-- Files -->
+        <div *ngIf="item.files && item.files.length > 0" class="files-container">
+          <ion-label class="files-label">Attached Files:</ion-label>
+          <div class="file-list">
+            <div *ngFor="let file of item.files" class="file-item">
+              <a [href]="file.url" target="_blank" class="file-link">
+                <span class="file-icon">{{ getFileIcon(file.name) }}</span>
+                <span class="file-name">{{ file.name }}</span>
+                <span class="file-size">({{ getFileSize(file.size) }})</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metadata -->
+        <div class="item-metadata">
+          <ion-note>
+            Created: {{ item.createdAt | date:'short' }}
+            <span *ngIf="item.updatedAt && item.updatedAt !== item.createdAt">
+              • Updated: {{ item.updatedAt | date:'short' }}
+            </span>
+          </ion-note>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Empty State -->
+    <ion-card *ngIf="filteredItems.length === 0" class="empty-state">
+      <ion-card-content>
+        <div class="empty-content">
+          <ion-icon name="document-outline" size="large" color="medium"></ion-icon>
+          <h3>No items found</h3>
+          <p *ngIf="filter.searchTerm || filter.category || filter.priority">
+            Try adjusting your filters or search terms.
+          </p>
+          <p *ngIf="!filter.searchTerm && !filter.category && !filter.priority">
+            Create your first item to get started!
+          </p>
+          <ion-button 
+            *ngIf="!filter.searchTerm && !filter.category && !filter.priority"
+            (click)="showCreateForm()" 
+            fill="solid" 
+            color="primary">
+            Create Item
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
