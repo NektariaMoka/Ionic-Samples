@@ -1,0 +1,110 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Web Payment
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Payment Amount Section -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Payment Details</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Amount</ion-label>
+        <ion-input 
+          type="number" 
+          [(ngModel)]="paymentAmount" 
+          placeholder="Enter amount"
+          min="1"
+          max="999999">
+        </ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="stacked">Currency</ion-label>
+        <ion-select [(ngModel)]="currency" (ionChange)="onCurrencyChange()" placeholder="Select currency">
+          <ion-select-option value="USD">USD - US Dollar</ion-select-option>
+          <ion-select-option value="EUR">EUR - Euro</ion-select-option>
+          <ion-select-option value="GBP">GBP - British Pound</ion-select-option>
+          <ion-select-option value="CAD">CAD - Canadian Dollar</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-button 
+        expand="block" 
+        fill="outline" 
+        (click)="createPaymentIntent()"
+        [disabled]="isLoading">
+        <ion-icon name="card-outline" slot="start"></ion-icon>
+        {{isLoading ? 'Creating...' : 'Initialize Payment'}}
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Payment Element Section -->
+  <ion-card *ngIf="clientSecret">
+    <ion-card-header>
+      <ion-card-title>Payment Information</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div id="payment-element">
+        <!-- Stripe Elements will be inserted here -->
+      </div>
+      
+      <div id="payment-element-errors" class="error-message">
+        <!-- Display error message to your customers here -->
+      </div>
+
+      <ion-button 
+        expand="block" 
+        fill="solid" 
+        color="primary"
+        (click)="handleSubmit()"
+        [disabled]="isLoading"
+        class="ion-margin-top">
+        <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+        {{isLoading ? 'Processing...' : 'Pay ' + currencyIcon + paymentAmount}}
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Payment Summary -->
+  <ion-card *ngIf="paymentAmount > 0">
+    <ion-card-header>
+      <ion-card-title>Payment Summary</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Amount</ion-label>
+        <ion-note slot="end">{{currencyIcon}}{{paymentAmount | number:'1.2-2'}}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Currency</ion-label>
+        <ion-note slot="end">{{currency}}</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Processing Fee</ion-label>
+        <ion-note slot="end">Included</ion-note>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Information Card -->
+  <ion-card>
+    <ion-item>
+      <ion-icon slot="start" name="information-circle-outline" color="primary"></ion-icon>
+      <ion-label>
+        <ion-text>
+          <p>Secure payment processing powered by Stripe. Your payment information is encrypted and secure.</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+</ion-content>
