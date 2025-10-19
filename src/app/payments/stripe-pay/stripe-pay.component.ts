@@ -27,9 +27,12 @@ export class StripePayComponent {
     this.currencyIcon = '$';
     this.cardDetails = {};
     this.GROUP_SEPARATOR = ' ';
-    Stripe.initialize({
-      publishableKey: environment.STRIPE_SK,
-    });
+    // Initialize Stripe only if a key is provided in environment
+    if ((environment as any).STRIPE_SK) {
+      Stripe.initialize({
+        publishableKey: (environment as any).STRIPE_SK,
+      });
+    }
     Stripe.addListener(PaymentSheetEventsEnum.Completed, () => {
       console.log('Payment completed');
       this.globalService.presentToast(
