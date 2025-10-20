@@ -5,18 +5,18 @@ import { GlobalService } from '../../services/global.services';
 import { environment } from '../../../environments/environment';
 import { CapacitorHttp, HttpResponse } from '@capacitor/core';
 
-declare var Stripe: any;
+declare const Stripe: any;
 
 @Component({
   selector: 'app-web-pay',
   templateUrl: './web-pay.component.html',
   styleUrls: ['./web-pay.component.scss'],
   imports: [IonicModule, FormsModule],
-  standalone: true
+  standalone: true,
 })
 export class WebPayComponent implements OnInit {
   private globalService = inject(GlobalService);
-  
+
   public paymentAmount: number = 100;
   public currency: string = 'USD';
   public currencyIcon: string = '$';
@@ -37,7 +37,11 @@ export class WebPayComponent implements OnInit {
       this.stripe = Stripe(environment.STRIPE_SK);
     } else {
       console.error('Stripe.js not loaded');
-      this.globalService.presentToast('Payment system not available', 'bottom', 2000);
+      this.globalService.presentToast(
+        'Payment system not available',
+        'bottom',
+        2000
+      );
     }
   }
 
@@ -62,7 +66,11 @@ export class WebPayComponent implements OnInit {
 
   async createPaymentIntent() {
     if (this.paymentAmount <= 0) {
-      this.globalService.presentToast('Please enter a valid amount', 'bottom', 2000);
+      this.globalService.presentToast(
+        'Please enter a valid amount',
+        'bottom',
+        2000
+      );
       return;
     }
 
@@ -72,9 +80,9 @@ export class WebPayComponent implements OnInit {
       const options = {
         url: 'http://localhost:4242/create-payment-intent',
         headers: { 'Content-Type': 'application/json' },
-        data: { 
+        data: {
           amount: this.paymentAmount * 100, // Convert to cents
-          currency: this.currency.toLowerCase()
+          currency: this.currency.toLowerCase(),
         },
       };
 
@@ -118,8 +126,8 @@ export class WebPayComponent implements OnInit {
           fontFamily: 'Ideal Sans, system-ui, sans-serif',
           spacingUnit: '2px',
           borderRadius: '4px',
-        }
-      }
+        },
+      },
     });
 
     this.paymentElement = this.elements.create('payment');
@@ -141,7 +149,11 @@ export class WebPayComponent implements OnInit {
 
   async handleSubmit() {
     if (!this.stripe || !this.elements || !this.clientSecret) {
-      this.globalService.presentToast('Payment system not ready', 'bottom', 2000);
+      this.globalService.presentToast(
+        'Payment system not ready',
+        'bottom',
+        2000
+      );
       return;
     }
 

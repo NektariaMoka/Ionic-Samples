@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './payments.component.html',
   styleUrls: ['./payments.component.scss'],
   imports: [IonicModule, RouterModule],
-  standalone: true
+  standalone: true,
 })
 export class PaymentsComponent {
   constructor() {}

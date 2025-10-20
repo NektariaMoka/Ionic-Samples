@@ -61,7 +61,6 @@
     background: var(--ion-color-light);
   }
 
-
   ion-header {
     --background: linear-gradient(to right, #008ff5 14%, #57b1f1 96%);
   }
@@ -76,8 +75,6 @@
   }
 }
 
-
-
 // OVERLAY -- Sidemenu Layout 5 styling START
 
 @media screen and (max-width: 767px) {
@@ -91,7 +88,7 @@
   .content {
     height: 100%;
     width: 100%;
-    background-image: url("../assets/sidemenu.jpeg");
+    background-image: url('../assets/sidemenu.jpeg');
     background-size: cover;
     background-position: center;
     filter: blur(3px);
@@ -131,7 +128,6 @@
         --background: transparent;
       }
     }
-
   }
 }
 @media (prefers-color-scheme: dark) {

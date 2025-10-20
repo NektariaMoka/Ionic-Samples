@@ -27,20 +27,22 @@
           <ion-col size="12" size-md="6">
             <ion-item>
               <ion-label position="stacked">Search</ion-label>
-              <ion-input 
+              <ion-input
                 placeholder="Search by title, description, or tags..."
                 (ionInput)="onSearchChange($event)"
-                [value]="filter.searchTerm">
+                [value]="filter.searchTerm"
+              >
               </ion-input>
             </ion-item>
           </ion-col>
           <ion-col size="12" size-md="3">
             <ion-item>
               <ion-label position="stacked">Category</ion-label>
-              <ion-select 
+              <ion-select
                 placeholder="Select category"
                 (ionChange)="onCategoryChange($event)"
-                [value]="filter.category">
+                [value]="filter.category"
+              >
                 <ion-select-option value="">All Categories</ion-select-option>
                 <ion-select-option *ngFor="let category of categories" [value]="category">
                   {{ category }}
@@ -51,10 +53,11 @@
           <ion-col size="12" size-md="3">
             <ion-item>
               <ion-label position="stacked">Priority</ion-label>
-              <ion-select 
+              <ion-select
                 placeholder="Select priority"
                 (ionChange)="onPriorityChange($event)"
-                [value]="filter.priority">
+                [value]="filter.priority"
+              >
                 <ion-select-option value="">All Priorities</ion-select-option>
                 <ion-select-option value="low">Low ({{ priorityCounts['low'] || 0 }})</ion-select-option>
                 <ion-select-option value="medium">Medium ({{ priorityCounts['medium'] || 0 }})</ion-select-option>
@@ -66,19 +69,14 @@
         <ion-row>
           <ion-col size="12">
             <ion-item>
-              <ion-checkbox 
-                (ionChange)="onActiveChange($event)"
-                [checked]="filter.isActive">
-              </ion-checkbox>
+              <ion-checkbox (ionChange)="onActiveChange($event)" [checked]="filter.isActive"> </ion-checkbox>
               <ion-label>Show only active items</ion-label>
             </ion-item>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="12">
-            <ion-button (click)="clearFilters()" fill="outline" color="medium">
-              Clear Filters
-            </ion-button>
+            <ion-button (click)="clearFilters()" fill="outline" color="medium"> Clear Filters </ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -98,7 +96,7 @@
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
-      
+
       <ion-content class="form-content">
         <form [formGroup]="crudForm" (ngSubmit)="onSubmit()">
           <ion-card>
@@ -106,10 +104,11 @@
               <!-- Basic Information -->
               <ion-item>
                 <ion-label position="stacked">Title *</ion-label>
-                <ion-input 
+                <ion-input
                   formControlName="title"
                   placeholder="Enter item title"
-                  [class.ion-invalid]="crudForm.get('title')?.invalid && crudForm.get('title')?.touched">
+                  [class.ion-invalid]="crudForm.get('title')?.invalid && crudForm.get('title')?.touched"
+                >
                 </ion-input>
               </ion-item>
               <ion-note *ngIf="crudForm.get('title')?.invalid && crudForm.get('title')?.touched" color="danger">
@@ -118,35 +117,33 @@
 
               <ion-item>
                 <ion-label position="stacked">Description *</ion-label>
-                <ion-textarea 
+                <ion-textarea
                   formControlName="description"
                   placeholder="Enter item description"
                   rows="4"
-                  [class.ion-invalid]="crudForm.get('description')?.invalid && crudForm.get('description')?.touched">
+                  [class.ion-invalid]="crudForm.get('description')?.invalid && crudForm.get('description')?.touched"
+                >
                 </ion-textarea>
               </ion-item>
-              <ion-note *ngIf="crudForm.get('description')?.invalid && crudForm.get('description')?.touched" color="danger">
+              <ion-note
+                *ngIf="crudForm.get('description')?.invalid && crudForm.get('description')?.touched"
+                color="danger"
+              >
                 Description must be at least 10 characters long
               </ion-note>
 
               <ion-item>
                 <ion-label position="stacked">Category *</ion-label>
-                <ion-input 
-                  formControlName="category"
-                  placeholder="Enter or select category"
-                  list="categories">
+                <ion-input formControlName="category" placeholder="Enter or select category" list="categories">
                 </ion-input>
                 <datalist id="categories">
-                  <option *ngFor="let category of categories" [value]="category">
+                  <option *ngFor="let category of categories" [value]="category"></option>
                 </datalist>
               </ion-item>
 
               <ion-item>
                 <ion-label position="stacked">Tags</ion-label>
-                <ion-input 
-                  formControlName="tags"
-                  placeholder="Enter tags separated by commas">
-                </ion-input>
+                <ion-input formControlName="tags" placeholder="Enter tags separated by commas"> </ion-input>
               </ion-item>
 
               <ion-item>
@@ -166,19 +163,17 @@
               <!-- File Upload Section -->
               <div class="file-upload-section">
                 <ion-label class="file-upload-label">Attach Files</ion-label>
-                
+
                 <div class="file-input-container">
-                  <input 
-                    type="file" 
-                    id="fileInput" 
-                    multiple 
+                  <input
+                    type="file"
+                    id="fileInput"
+                    multiple
                     accept="image/*,.pdf,.doc,.docx,.txt"
                     (change)="onFileSelected($event)"
-                    style="display: none;">
-                  <ion-button 
-                    fill="outline" 
-                    color="primary" 
-                    (click)="document.getElementById('fileInput')?.click()">
+                    style="display: none"
+                  />
+                  <ion-button fill="outline" color="primary" (click)="document.getElementById('fileInput')?.click()">
                     <ion-icon name="cloud-upload" slot="start"></ion-icon>
                     Choose Files
                   </ion-button>
@@ -200,11 +195,7 @@
                         <div class="file-size">{{ getFileSize(preview.file.size) }}</div>
                       </div>
                     </div>
-                    <ion-button 
-                      fill="clear" 
-                      color="danger" 
-                      size="small"
-                      (click)="removeFile(i)">
+                    <ion-button fill="clear" color="danger" size="small" (click)="removeFile(i)">
                       <ion-icon name="close"></ion-icon>
                     </ion-button>
                   </div>
@@ -213,19 +204,10 @@
 
               <!-- Form Actions -->
               <div class="form-actions">
-                <ion-button 
-                  type="submit" 
-                  [disabled]="crudForm.invalid || isUploading"
-                  expand="block">
+                <ion-button type="submit" [disabled]="crudForm.invalid || isUploading" expand="block">
                   {{ isEditing ? 'Update Item' : 'Create Item' }}
                 </ion-button>
-                <ion-button 
-                  type="button" 
-                  fill="outline" 
-                  expand="block"
-                  (click)="hideForm()">
-                  Cancel
-                </ion-button>
+                <ion-button type="button" fill="outline" expand="block" (click)="hideForm()"> Cancel </ion-button>
               </div>
             </ion-card-content>
           </ion-card>
@@ -249,17 +231,10 @@
             </ion-chip>
           </div>
           <div class="item-actions">
-            <ion-button 
-              fill="clear" 
-              size="small"
-              (click)="showEditForm(item)">
+            <ion-button fill="clear" size="small" (click)="showEditForm(item)">
               <ion-icon name="create"></ion-icon>
             </ion-button>
-            <ion-button 
-              fill="clear" 
-              size="small" 
-              color="danger"
-              (click)="deleteItem(item)">
+            <ion-button fill="clear" size="small" color="danger" (click)="deleteItem(item)">
               <ion-icon name="trash"></ion-icon>
             </ion-button>
           </div>
@@ -269,12 +244,10 @@
 
       <ion-card-content>
         <p class="item-description">{{ item.description }}</p>
-        
+
         <!-- Tags -->
         <div *ngIf="item.tags && item.tags.length > 0" class="tags-container">
-          <ion-chip *ngFor="let tag of item.tags" size="small" color="light">
-            {{ tag }}
-          </ion-chip>
+          <ion-chip *ngFor="let tag of item.tags" size="small" color="light"> {{ tag }} </ion-chip>
         </div>
 
         <!-- Files -->
@@ -315,11 +288,12 @@
           <p *ngIf="!filter.searchTerm && !filter.category && !filter.priority">
             Create your first item to get started!
           </p>
-          <ion-button 
+          <ion-button
             *ngIf="!filter.searchTerm && !filter.category && !filter.priority"
-            (click)="showCreateForm()" 
-            fill="solid" 
-            color="primary">
+            (click)="showCreateForm()"
+            fill="solid"
+            color="primary"
+          >
             Create Item
           </ion-button>
         </div>

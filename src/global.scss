@@ -1,23 +1,23 @@
 /* Core CSS required for Ionic components to work properly */
-@import "@ionic/angular/css/core.css";
+@import '@ionic/angular/css/core.css';
 
 /* Basic CSS for apps built with Ionic */
-@import "@ionic/angular/css/normalize.css";
-@import "@ionic/angular/css/structure.css";
-@import "@ionic/angular/css/typography.css";
-@import "@ionic/angular/css/display.css";
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
+@import '@ionic/angular/css/display.css';
 
 /* Optional CSS utils that can be commented out */
-@import "@ionic/angular/css/padding.css";
-@import "@ionic/angular/css/float-elements.css";
-@import "@ionic/angular/css/text-alignment.css";
-@import "@ionic/angular/css/text-transformation.css";
-@import "@ionic/angular/css/flex-utils.css";
-@import "assets/animate.css";
+@import '@ionic/angular/css/padding.css';
+@import '@ionic/angular/css/float-elements.css';
+@import '@ionic/angular/css/text-alignment.css';
+@import '@ionic/angular/css/text-transformation.css';
+@import '@ionic/angular/css/flex-utils.css';
+@import 'assets/animate.css';
 /* Swiper core styles */
-@import "swiper/css";
-@import "swiper/css/navigation";
-@import "swiper/css/pagination";
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
 
 @media (prefers-color-scheme: light) {
   /*
@@ -195,87 +195,87 @@
   }
 }
 
-:root[mode="ios"] .muli,
-:root[mode="md"] .muli {
-  --ion-font-family: "Muli" !important;
-  font-family: "Muli" !important;
+:root[mode='ios'] .muli,
+:root[mode='md'] .muli {
+  --ion-font-family: 'Muli' !important;
+  font-family: 'Muli' !important;
 }
 
-:root[mode="ios"] .srisakdi,
-:root[mode="md"] .srisakdi {
-  --ion-font-family: "Srisakdi" !important;
-  font-family: "Srisakdi" !important;
+:root[mode='ios'] .srisakdi,
+:root[mode='md'] .srisakdi {
+  --ion-font-family: 'Srisakdi' !important;
+  font-family: 'Srisakdi' !important;
 }
 
-:root[mode="ios"] .qranklestein,
-:root[mode="md"] .qranklestein {
-  --ion-font-family: "Qranklestein" !important;
-  font-family: "Qranklestein" !important;
+:root[mode='ios'] .qranklestein,
+:root[mode='md'] .qranklestein {
+  --ion-font-family: 'Qranklestein' !important;
+  font-family: 'Qranklestein' !important;
 }
 
 @font-face {
-  font-family: "Qranklestein";
+  font-family: 'Qranklestein';
   font-style: normal;
   font-weight: normal;
 }
 
 @font-face {
-  font-family: "Liberation Serif";
+  font-family: 'Liberation Serif';
   font-style: normal;
   font-weight: normal;
 }
 
 @font-face {
-  font-family: "Liberation Serif";
+  font-family: 'Liberation Serif';
   font-style: italic;
   font-weight: normal;
 }
 
 @font-face {
-  font-family: "Liberation Serif";
+  font-family: 'Liberation Serif';
   font-style: italic;
   font-weight: 400;
 }
 
 @font-face {
-  font-family: "Liberation Serif";
+  font-family: 'Liberation Serif';
 
   font-style: normal;
   font-weight: 400;
 }
 
 @font-face {
-  font-family: "Liberation Serif";
+  font-family: 'Liberation Serif';
   font-style: normal;
   font-weight: 500;
 }
 
 @font-face {
-  font-family: "Liberation Serif";
+  font-family: 'Liberation Serif';
   font-style: italic;
   font-weight: 500;
 }
 
 @font-face {
-  font-family: "Liberation Serif";
+  font-family: 'Liberation Serif';
   font-style: normal;
   font-weight: bold;
 }
 
 @font-face {
-  font-family: "Liberation Serif";
+  font-family: 'Liberation Serif';
   font-style: italic;
   font-weight: bold;
 }
 
 @font-face {
-  font-family: "Liberation Serif";
+  font-family: 'Liberation Serif';
   font-style: italic;
   font-weight: 100;
 }
 
 @font-face {
-  font-family: "Liberation Serif";
+  font-family: 'Liberation Serif';
   font-style: normal;
   font-weight: 100;
 }
@@ -386,7 +386,7 @@ ion-item {
   top: -26px;
   left: -31px;
   display: block;
-  content: "";
+  content: '';
   -webkit-transform: rotate(-35deg);
   transform: rotate(-35deg);
 }
@@ -404,7 +404,7 @@ ion-item {
   border-left: 50px solid transparent;
   -webkit-transform: rotate(-70deg);
   transform: rotate(-70deg);
-  content: "";
+  content: '';
 }
 
 .header-ios ion-toolbar:last-of-type {
@@ -416,7 +416,7 @@ ion-item {
 }
 
 /* Dark Theme */
-@import "@ionic/angular/css/palettes/dark.system.css";
+@import '@ionic/angular/css/palettes/dark.system.css';
 
 .responsive-container {
   width: 100%;

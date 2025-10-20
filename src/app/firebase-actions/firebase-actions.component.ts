@@ -1,6 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
@@ -8,14 +14,17 @@ import { CrudService } from '../services/crud.service';
 import { FileUploadService } from '../services/file-upload.service';
 import { AuthService } from '../services/auth.service';
 import { LoadingService } from '../services/loading.service';
-import { CrudItem, CrudFormData, CrudFilter } from '../models/crud-item.interface';
+import {
+  CrudItem,
+  CrudFilter,
+} from '../models/crud-item.interface';
 
 @Component({
   selector: 'app-firebase-actions',
   templateUrl: './firebase-actions.component.html',
   styleUrls: ['./firebase-actions.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule]
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule],
 })
 export class FirebaseActionsComponent implements OnInit, OnDestroy {
   // Form and data
@@ -23,24 +32,24 @@ export class FirebaseActionsComponent implements OnInit, OnDestroy {
   items: CrudItem[] = [];
   filteredItems: CrudItem[] = [];
   selectedItem: CrudItem | null = null;
-  
+
   // UI state
   isEditing = false;
   showForm = false;
   showFilters = false;
   uploadProgress = 0;
   isUploading = false;
-  
+
   // Filters
   filter: CrudFilter = {};
   categories: string[] = [];
   tags: string[] = [];
   priorityCounts: { [key: string]: number } = {};
-  
+
   // File handling
   selectedFiles: File[] = [];
   previewFiles: { file: File; preview: string }[] = [];
-  
+
   // Subscriptions
   private subscriptions: Subscription[] = [];
 
@@ -72,10 +81,12 @@ export class FirebaseActionsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(itemsSub);
 
     // Subscribe to upload progress
-    const progressSub = this.fileUploadService.uploadProgress$.subscribe(progress => {
-      this.uploadProgress = progress;
-      this.isUploading = progress > 0 && progress < 100;
-    });
+    const progressSub = this.fileUploadService.uploadProgress$.subscribe(
+      progress => {
+        this.uploadProgress = progress;
+        this.isUploading = progress > 0 && progress < 100;
+      }
+    );
     this.subscriptions.push(progressSub);
 
     // Load initial data
@@ -89,7 +100,7 @@ export class FirebaseActionsComponent implements OnInit, OnDestroy {
       category: ['', [Validators.required]],
       tags: [''],
       priority: ['medium', [Validators.required]],
-      isActive: [true]
+      isActive: [true],
     });
   }
 
@@ -105,7 +116,7 @@ export class FirebaseActionsComponent implements OnInit, OnDestroy {
     this.selectedItem = null;
     this.crudForm.reset({
       priority: 'medium',
-      isActive: true
+      isActive: true,
     });
     this.selectedFiles = [];
     this.previewFiles = [];
@@ -121,7 +132,7 @@ export class FirebaseActionsComponent implements OnInit, OnDestroy {
       category: item.category,
       tags: item.tags.join(', '),
       priority: item.priority,
-      isActive: item.isActive
+      isActive: item.isActive,
     });
     this.selectedFiles = [];
     this.previewFiles = [];
@@ -157,15 +168,17 @@ export class FirebaseActionsComponent implements OnInit, OnDestroy {
   }
 
   private createImagePreview(file: File): Promise<string> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const reader = new FileReader();
-      reader.onload = (e) => resolve(e.target?.result as string);
+      reader.onload = e => resolve(e.target?.result as string);
       reader.readAsDataURL(file);
     });
   }
 
   private getFileIcon(file: File): string {
-    const extension = this.fileUploadService.getFileExtension(file.name).toLowerCase();
+    const extension = this.fileUploadService
+      .getFileExtension(file.name)
+      .toLowerCase();
     const iconMap: { [key: string]: string } = {
       pdf: '📄',
       doc: '📝',
@@ -175,7 +188,7 @@ export class FirebaseActionsComponent implements OnInit, OnDestroy {
       jpeg: '🖼️',
       png: '🖼️',
       gif: '🖼️',
-      webp: '🖼️'
+      webp: '🖼️',
     };
     return iconMap[extension] || '📎';
   }
@@ -189,23 +202,32 @@ export class FirebaseActionsComponent implements OnInit, OnDestroy {
   async onSubmit() {
     if (this.crudForm.valid) {
       const formData = this.crudForm.value;
-      const tags = formData.tags ? formData.tags.split(',').map((tag: string) => tag.trim()).filter((tag: string) => tag) : [];
-      
+      const tags = formData.tags
+        ? formData.tags
+            .split(',')
+            .map((tag: string) => tag.trim())
+            .filter((tag: string) => tag)
+        : [];
+
       const itemData = {
         title: formData.title,
         description: formData.description,
         category: formData.category,
         tags,
         priority: formData.priority,
-        isActive: formData.isActive
+        isActive: formData.isActive,
       };
 
       if (this.isEditing && this.selectedItem) {
-        await this.crudService.updateItem(this.selectedItem.id!, itemData, this.selectedFiles);
+        await this.crudService.updateItem(
+          this.selectedItem.id!,
+          itemData,
+          this.selectedFiles
+        );
       } else {
         await this.crudService.createItem(itemData, this.selectedFiles);
       }
-      
+
       this.hideForm();
     }
   }
@@ -253,7 +275,7 @@ export class FirebaseActionsComponent implements OnInit, OnDestroy {
     const colors = {
       low: 'success',
       medium: 'warning',
-      high: 'danger'
+      high: 'danger',
     };
     return colors[priority as keyof typeof colors] || 'medium';
   }
@@ -287,7 +309,9 @@ export class FirebaseActionsComponent implements OnInit, OnDestroy {
 
   // Get file icon for display
   getFileIcon(filename: string): string {
-    const extension = this.fileUploadService.getFileExtension(filename).toLowerCase();
+    const extension = this.fileUploadService
+      .getFileExtension(filename)
+      .toLowerCase();
     const iconMap: { [key: string]: string } = {
       pdf: '📄',
       doc: '📝',
@@ -297,7 +321,7 @@ export class FirebaseActionsComponent implements OnInit, OnDestroy {
       jpeg: '🖼️',
       png: '🖼️',
       gif: '🖼️',
-      webp: '🖼️'
+      webp: '🖼️',
     };
     return iconMap[extension] || '📎';
   }

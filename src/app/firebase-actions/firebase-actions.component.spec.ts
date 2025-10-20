@@ -9,8 +9,8 @@ describe('FirebaseActionsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FirebaseActionsComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [FirebaseActionsComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(FirebaseActionsComponent);

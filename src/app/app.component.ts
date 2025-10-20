@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { NgClass, NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { environment } from '../environments/environment';
 import { BeginnerMenu } from '../models/menu';
 @Component({
   selector: 'app-root',
