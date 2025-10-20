@@ -11,13 +11,10 @@ import {
   query,
   where,
   orderBy,
-  limit,
-  startAfter,
-  DocumentSnapshot,
   serverTimestamp,
 } from '@angular/fire/firestore';
-import { Observable, from, BehaviorSubject } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CrudItem, CrudFilter } from '../models/crud-item.interface';
 import { FileUploadService } from './file-upload.service';
 import { AuthService } from './auth.service';
@@ -31,20 +28,23 @@ export class CrudService {
   private fileUploadService = inject(FileUploadService);
   private authService = inject(AuthService);
   private loadingService = inject(LoadingService);
-  
+
   private itemsSubject = new BehaviorSubject<CrudItem[]>([]);
   public items$ = this.itemsSubject.asObservable();
-  
+
   private readonly COLLECTION_NAME = 'crud-items';
 
   constructor() {
     this.loadItems();
   }
 
-  async createItem(itemData: Omit<CrudItem, 'id' | 'createdAt' | 'updatedAt' | 'files'>, files: File[] = []): Promise<CrudItem | null> {
+  async createItem(
+    itemData: Omit<CrudItem, 'id' | 'createdAt' | 'updatedAt' | 'files'>,
+    files: File[] = []
+  ): Promise<CrudItem | null> {
     try {
       await this.loadingService.showLoading('Creating item...');
-      
+
       const currentUser = this.authService.getCurrentUser();
       if (!currentUser) {
         throw new Error('User not authenticated');
@@ -61,11 +61,14 @@ export class CrudService {
         files: uploadedFiles,
       };
 
-      const docRef = await addDoc(collection(this.firestore, this.COLLECTION_NAME), {
-        ...newItem,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      });
+      const docRef = await addDoc(
+        collection(this.firestore, this.COLLECTION_NAME),
+        {
+          ...newItem,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        }
+      );
 
       const createdItem: CrudItem = {
         ...newItem,
@@ -77,20 +80,30 @@ export class CrudService {
       this.itemsSubject.next([createdItem, ...currentItems]);
 
       await this.loadingService.hideLoading();
-      await this.loadingService.showToast('Item created successfully!', 'success');
-      
+      await this.loadingService.showToast(
+        'Item created successfully!',
+        'success'
+      );
+
       return createdItem;
     } catch (error: any) {
       await this.loadingService.hideLoading();
-      await this.loadingService.showToast(error.message || 'Failed to create item', 'error');
+      await this.loadingService.showToast(
+        error.message || 'Failed to create item',
+        'error'
+      );
       return null;
     }
   }
 
-  async updateItem(itemId: string, updates: Partial<CrudItem>, newFiles: File[] = []): Promise<boolean> {
+  async updateItem(
+    itemId: string,
+    updates: Partial<CrudItem>,
+    newFiles: File[] = []
+  ): Promise<boolean> {
     try {
       await this.loadingService.showLoading('Updating item...');
-      
+
       const currentUser = this.authService.getCurrentUser();
       if (!currentUser) {
         throw new Error('User not authenticated');
@@ -110,20 +123,31 @@ export class CrudService {
 
       // Update local state
       const currentItems = this.itemsSubject.value;
-      const updatedItems = currentItems.map(item => 
-        item.id === itemId 
-          ? { ...item, ...updates, updatedAt: new Date(), files: uploadedFiles.length > 0 ? uploadedFiles : item.files }
+      const updatedItems = currentItems.map(item =>
+        item.id === itemId
+          ? {
+              ...item,
+              ...updates,
+              updatedAt: new Date(),
+              files: uploadedFiles.length > 0 ? uploadedFiles : item.files,
+            }
           : item
       );
       this.itemsSubject.next(updatedItems);
 
       await this.loadingService.hideLoading();
-      await this.loadingService.showToast('Item updated successfully!', 'success');
-      
+      await this.loadingService.showToast(
+        'Item updated successfully!',
+        'success'
+      );
+
       return true;
     } catch (error: any) {
       await this.loadingService.hideLoading();
-      await this.loadingService.showToast(error.message || 'Failed to update item', 'error');
+      await this.loadingService.showToast(
+        error.message || 'Failed to update item',
+        'error'
+      );
       return false;
     }
   }
@@ -131,7 +155,7 @@ export class CrudService {
   async deleteItem(itemId: string): Promise<boolean> {
     try {
       await this.loadingService.showLoading('Deleting item...');
-      
+
       // Get item to delete associated files
       const item = this.itemsSubject.value.find(i => i.id === itemId);
       if (item?.files) {
@@ -149,12 +173,18 @@ export class CrudService {
       this.itemsSubject.next(filteredItems);
 
       await this.loadingService.hideLoading();
-      await this.loadingService.showToast('Item deleted successfully!', 'success');
-      
+      await this.loadingService.showToast(
+        'Item deleted successfully!',
+        'success'
+      );
+
       return true;
     } catch (error: any) {
       await this.loadingService.hideLoading();
-      await this.loadingService.showToast(error.message || 'Failed to delete item', 'error');
+      await this.loadingService.showToast(
+        error.message || 'Failed to delete item',
+        'error'
+      );
       return false;
     }
   }
@@ -163,7 +193,7 @@ export class CrudService {
     try {
       const docRef = doc(this.firestore, this.COLLECTION_NAME, itemId);
       const docSnap = await getDoc(docRef);
-      
+
       if (docSnap.exists()) {
         return { id: docSnap.id, ...docSnap.data() } as CrudItem;
       }
@@ -180,14 +210,14 @@ export class CrudService {
         collection(this.firestore, this.COLLECTION_NAME),
         orderBy('createdAt', 'desc')
       );
-      
+
       const querySnapshot = await getDocs(q);
       const items: CrudItem[] = [];
-      
-      querySnapshot.forEach((doc) => {
+
+      querySnapshot.forEach(doc => {
         items.push({ id: doc.id, ...doc.data() } as CrudItem);
       });
-      
+
       this.itemsSubject.next(items);
     } catch (error) {
       console.error('Error loading items:', error);
@@ -214,18 +244,19 @@ export class CrudService {
 
       const querySnapshot = await getDocs(q);
       let items: CrudItem[] = [];
-      
-      querySnapshot.forEach((doc) => {
+
+      querySnapshot.forEach(doc => {
         items.push({ id: doc.id, ...doc.data() } as CrudItem);
       });
 
       // Client-side search for text fields
       if (filter.searchTerm) {
         const searchTerm = filter.searchTerm.toLowerCase();
-        items = items.filter(item => 
-          item.title.toLowerCase().includes(searchTerm) ||
-          item.description.toLowerCase().includes(searchTerm) ||
-          item.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+        items = items.filter(
+          item =>
+            item.title.toLowerCase().includes(searchTerm) ||
+            item.description.toLowerCase().includes(searchTerm) ||
+            item.tags.some(tag => tag.toLowerCase().includes(searchTerm))
         );
       }
 
@@ -249,16 +280,14 @@ export class CrudService {
   }
 
   getActiveItems(): Observable<CrudItem[]> {
-    return this.items$.pipe(
-      map(items => items.filter(item => item.isActive))
-    );
+    return this.items$.pipe(map(items => items.filter(item => item.isActive)));
   }
 
   private async uploadFiles(files: File[], userId: string): Promise<any[]> {
     if (!files || files.length === 0) return [];
 
     const uploadedFiles = [];
-    
+
     for (const file of files) {
       try {
         const result = await this.fileUploadService.uploadDocument(
@@ -266,13 +295,15 @@ export class CrudService {
           file,
           'crud-items'
         );
-        
+
         if (result.success && result.downloadURL) {
           uploadedFiles.push({
             id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
             name: file.name,
             url: result.downloadURL,
-            type: this.fileUploadService.isImageFile(file) ? 'image' : 'document',
+            type: this.fileUploadService.isImageFile(file)
+              ? 'image'
+              : 'document',
             size: file.size,
             uploadedAt: new Date(),
             path: `users/${userId}/crud-items/${Date.now()}_${file.name}`,
@@ -282,7 +313,7 @@ export class CrudService {
         console.error('Error uploading file:', error);
       }
     }
-    
+
     return uploadedFiles;
   }
 
@@ -302,9 +333,12 @@ export class CrudService {
 
   getPriorityCounts(): { [key: string]: number } {
     const items = this.itemsSubject.value;
-    return items.reduce((counts, item) => {
-      counts[item.priority] = (counts[item.priority] || 0) + 1;
-      return counts;
-    }, {} as { [key: string]: number });
+    return items.reduce(
+      (counts, item) => {
+        counts[item.priority] = (counts[item.priority] || 0) + 1;
+        return counts;
+      },
+      {} as { [key: string]: number }
+    );
   }
 }

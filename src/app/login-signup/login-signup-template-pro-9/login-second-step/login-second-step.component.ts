@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import {
   FormBuilder,
-  FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -26,7 +25,7 @@ export class LoginSecondStepComponent implements OnInit {
   showRecoverPass = true;
 
   ngOnInit() {
-    this.registrationForm.valueChanges.subscribe((form) => {
+    this.registrationForm.valueChanges.subscribe(form => {
       if (form.v_email && form.v_password_user) {
         this.showValidation = this.globalProvider.checkEmail(form.v_email);
       } else {
@@ -171,7 +170,7 @@ export class LoginSecondStepComponent implements OnInit {
     //   });
   }
 
-  setDettaglioUtenza(result: any) {
+  setDettaglioUtenza(_result: any) {
     // console.log('%c userStorage! ', 'background: #222; color: #bada55', result);
     // this.storageProvider.storeDettaglioUtenza('user', result);
     //

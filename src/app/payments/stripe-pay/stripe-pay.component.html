@@ -3,9 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      Payment Methods
-    </ion-title>
+    <ion-title> Payment Methods </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -18,15 +16,10 @@
     <ion-card-content>
       <ion-item>
         <ion-label position="stacked">Amount</ion-label>
-        <ion-input 
-          type="number" 
-          [(ngModel)]="paymentAmount" 
-          placeholder="Enter amount"
-          min="1"
-          max="999999">
+        <ion-input type="number" [(ngModel)]="paymentAmount" placeholder="Enter amount" min="1" max="999999">
         </ion-input>
       </ion-item>
-      
+
       <ion-item>
         <ion-label position="stacked">Currency</ion-label>
         <ion-select [(ngModel)]="currency" placeholder="Select currency">
@@ -106,10 +99,11 @@
     <ion-card-content>
       <ion-list>
         <ion-item *ngFor="let payment of paymentHistory; let i = index" [class]="i === 0 ? 'recent-payment' : ''">
-          <ion-icon 
-            [name]="payment.status === 'completed' ? 'checkmark-circle' : 'close-circle'" 
+          <ion-icon
+            [name]="payment.status === 'completed' ? 'checkmark-circle' : 'close-circle'"
             [color]="payment.status === 'completed' ? 'success' : 'danger'"
-            slot="start">
+            slot="start"
+          >
           </ion-icon>
           <ion-label>
             <h3>{{payment.currencyIcon}}{{payment.amount | number:'1.2-2'}} {{payment.currency}}</h3>

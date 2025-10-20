@@ -18,7 +18,7 @@ import {
   updateDoc,
   serverTimestamp,
 } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable, from } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import {
   User,
   UserProfile,
@@ -39,7 +39,7 @@ export class AuthService {
   private loadingService = inject(LoadingService);
   constructor() {
     // Listen to auth state changes
-    this.auth.onAuthStateChanged(async (firebaseUser) => {
+    this.auth.onAuthStateChanged(async firebaseUser => {
       if (firebaseUser) {
         const user = await this.mapFirebaseUserToUser(firebaseUser);
         this.currentUserSubject.next(user);
@@ -62,7 +62,7 @@ export class AuthService {
       const userCredential = await createUserWithEmailAndPassword(
         this.auth,
         signupData.email,
-        signupData.password,
+        signupData.password
       );
 
       const firebaseUser = userCredential.user;
@@ -102,7 +102,7 @@ export class AuthService {
       await this.loadingService.hideLoading();
       await this.loadingService.showToast(
         'Account created successfully! Please check your email for verification.',
-        'success',
+        'success'
       );
 
       return { success: true, user };
@@ -121,7 +121,7 @@ export class AuthService {
       const userCredential = await signInWithEmailAndPassword(
         this.auth,
         credentials.email,
-        credentials.password,
+        credentials.password
       );
 
       const user = await this.mapFirebaseUserToUser(userCredential.user);
@@ -169,7 +169,7 @@ export class AuthService {
       await this.loadingService.hideLoading();
       await this.loadingService.showToast(
         'Password reset email sent!',
-        'success',
+        'success'
       );
 
       return true;
@@ -185,14 +185,14 @@ export class AuthService {
     try {
       await signOut(this.auth);
       await this.loadingService.showToast('Signed out successfully', 'success');
-    } catch (error: any) {
+    } catch (_error: any) {
       await this.loadingService.showToast('Error signing out', 'error');
     }
   }
 
   async updateUserProfile(
     uid: string,
-    profileData: Partial<UserProfile>,
+    profileData: Partial<UserProfile>
   ): Promise<boolean> {
     try {
       const userDocRef = doc(this.firestore, 'users', uid);
@@ -238,7 +238,7 @@ export class AuthService {
 
   private async createUserDocument(
     uid: string,
-    profile: UserProfile,
+    profile: UserProfile
   ): Promise<void> {
     const userDocRef = doc(this.firestore, 'users', uid);
     await setDoc(userDocRef, {
@@ -261,7 +261,7 @@ export class AuthService {
   }
 
   private async mapFirebaseUserToUser(
-    firebaseUser: FirebaseUser,
+    firebaseUser: FirebaseUser
   ): Promise<User> {
     const profile = await this.getUserProfile(firebaseUser.uid);
 

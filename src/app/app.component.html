@@ -2,85 +2,51 @@
   <ion-icon name="person-circle-outline"></ion-icon>
 
   <ion-split-pane contentId="main-content">
-    <ion-menu
-      contentId="main-content"
-      type="overlay"
-      class="left-menu"
-      side="start"
-    >
+    <ion-menu contentId="main-content" type="overlay" class="left-menu" side="start">
       <ion-header class="head">
         <div class="logo-header">
           <div class="logo">
-            <img
-              ngSrc="assets/moka-cartoon.png"
-              alt="Moka icon"
-              height="450"
-              width="450"
-              priority
-            />
+            <img ngSrc="assets/moka-cartoon.png" alt="Moka icon" height="450" width="450" priority />
           </div>
         </div>
       </ion-header>
       <ion-content>
         <ion-list class="list-padd ion-no-margin ion-no-padding">
-          @for (p of beginnerMenu; track p.title) {
-            @if (p.children && !p.module) {
+          @for (p of beginnerMenu; track p.title) { @if (p.children && !p.module) {
+          <ion-item color="light" detail="true" (click)="expandMenu(p.title)">
+            <ion-icon slot="start" [name]="p.icon"></ion-icon>
+            <ion-label> {{ p.title }} </ion-label>
+          </ion-item>
+          <div class="zero-h" [ngClass]="{ 'animate-expand': showChildren === p.title }">
+            <ion-menu-toggle [autoHide]="showChildren !== p.title">
+              @for (option of p.children; track option.title) {
               <ion-item
                 color="light"
-                detail="true"
-                (click)="expandMenu(p.title)"
+                class="ion-padding-start"
+                [ngClass]="{ disabled: option.disabled }"
+                routerLink="{{ option.url }}"
+                (click)="redirectPage()"
               >
-                <ion-icon slot="start" [name]="p.icon"></ion-icon>
-                <ion-label>
-                  {{ p.title }}
-                </ion-label>
+                <ion-icon slot="start" [name]="option.icon"></ion-icon>
+                <ion-label> {{ option.title }} </ion-label>
               </ion-item>
-              <div
-                class="zero-h"
-                [ngClass]="{ 'animate-expand': showChildren === p.title }"
-              >
-                <ion-menu-toggle [autoHide]="showChildren !== p.title">
-                  @for (option of p.children; track option.title) {
-                    <ion-item
-                      color="light"
-                      class="ion-padding-start"
-                      [ngClass]="{ disabled: option.disabled }"
-                      routerLink="{{ option.url }}"
-                      (click)="redirectPage()"
-                    >
-                      <ion-icon slot="start" [name]="option.icon"></ion-icon>
-                      <ion-label>
-                        {{ option.title }}
-                      </ion-label>
-                    </ion-item>
-                  }
-                </ion-menu-toggle>
-              </div>
-            }
-            @if (p.children && p.module === "sidemenu") {
-              <ion-item
-                color="light"
-                detail="true"
-                (click)="expandMenu(p.title)"
-              >
-                <ion-icon slot="start" [name]="p.icon"></ion-icon>
-                <ion-label>
-                  {{ p.title }}
-                </ion-label>
-              </ion-item>
+              }
+            </ion-menu-toggle>
+          </div>
+          } @if (p.children && p.module === "sidemenu") {
+          <ion-item color="light" detail="true" (click)="expandMenu(p.title)">
+            <ion-icon slot="start" [name]="p.icon"></ion-icon>
+            <ion-label> {{ p.title }} </ion-label>
+          </ion-item>
 
-            }
-            @if (!p.children) {
-              <ion-menu-toggle auto-hide="false">
-                <ion-item color="light" [routerLink]="[p.url]" detail="true">
-                  <ion-icon slot="start" [name]="p.icon"></ion-icon>
-                  <ion-label>
-                    {{ p.title }}
-                  </ion-label>
-                </ion-item>
-              </ion-menu-toggle>
-            }
-          }
+          } @if (!p.children) {
+          <ion-menu-toggle auto-hide="false">
+            <ion-item color="light" [routerLink]="[p.url]" detail="true">
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-label> {{ p.title }} </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          } }
         </ion-list>
       </ion-content>
     </ion-menu>

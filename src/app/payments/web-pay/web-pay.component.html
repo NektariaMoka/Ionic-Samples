@@ -3,9 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>
-      Web Payment
-    </ion-title>
+    <ion-title> Web Payment </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -18,15 +16,10 @@
     <ion-card-content>
       <ion-item>
         <ion-label position="stacked">Amount</ion-label>
-        <ion-input 
-          type="number" 
-          [(ngModel)]="paymentAmount" 
-          placeholder="Enter amount"
-          min="1"
-          max="999999">
+        <ion-input type="number" [(ngModel)]="paymentAmount" placeholder="Enter amount" min="1" max="999999">
         </ion-input>
       </ion-item>
-      
+
       <ion-item>
         <ion-label position="stacked">Currency</ion-label>
         <ion-select [(ngModel)]="currency" (ionChange)="onCurrencyChange()" placeholder="Select currency">
@@ -37,11 +30,7 @@
         </ion-select>
       </ion-item>
 
-      <ion-button 
-        expand="block" 
-        fill="outline" 
-        (click)="createPaymentIntent()"
-        [disabled]="isLoading">
+      <ion-button expand="block" fill="outline" (click)="createPaymentIntent()" [disabled]="isLoading">
         <ion-icon name="card-outline" slot="start"></ion-icon>
         {{isLoading ? 'Creating...' : 'Initialize Payment'}}
       </ion-button>
@@ -57,18 +46,19 @@
       <div id="payment-element">
         <!-- Stripe Elements will be inserted here -->
       </div>
-      
+
       <div id="payment-element-errors" class="error-message">
         <!-- Display error message to your customers here -->
       </div>
 
-      <ion-button 
-        expand="block" 
-        fill="solid" 
+      <ion-button
+        expand="block"
+        fill="solid"
         color="primary"
         (click)="handleSubmit()"
         [disabled]="isLoading"
-        class="ion-margin-top">
+        class="ion-margin-top"
+      >
         <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
         {{isLoading ? 'Processing...' : 'Pay ' + currencyIcon + paymentAmount}}
       </ion-button>

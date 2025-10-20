@@ -17,7 +17,7 @@ export class LoadingService {
 
   async showLoading(
     message: string = 'Please wait...',
-    duration?: number,
+    duration?: number
   ): Promise<void> {
     // Dismiss any existing loading
     if (this.currentLoading) {
@@ -45,7 +45,7 @@ export class LoadingService {
     message: string,
     type: 'success' | 'error' | 'warning' | 'info' = 'info',
     duration: number = 3000,
-    position: 'top' | 'middle' | 'bottom' = 'bottom',
+    position: 'top' | 'middle' | 'bottom' = 'bottom'
   ): Promise<void> {
     const toast = await this.toastController.create({
       message,
@@ -67,7 +67,7 @@ export class LoadingService {
   async showAlert(
     title: string,
     message: string,
-    buttons: string[] = ['OK'],
+    buttons: string[] = ['OK']
   ): Promise<void> {
     const alert = await this.alertController.create({
       header: title,
@@ -83,9 +83,9 @@ export class LoadingService {
     title: string,
     message: string,
     confirmText: string = 'Confirm',
-    cancelText: string = 'Cancel',
+    cancelText: string = 'Cancel'
   ): Promise<boolean> {
-    return new Promise(async (resolve) => {
+    return new Promise(async resolve => {
       const alert = await this.alertController.create({
         header: title,
         message,
@@ -111,9 +111,9 @@ export class LoadingService {
     title: string,
     message: string,
     placeholder: string = '',
-    inputType: 'text' | 'email' | 'password' | 'number' = 'text',
+    inputType: 'text' | 'email' | 'password' | 'number' = 'text'
   ): Promise<string | null> {
-    return new Promise(async (resolve) => {
+    return new Promise(async resolve => {
       const alert = await this.alertController.create({
         header: title,
         message,
@@ -132,7 +132,7 @@ export class LoadingService {
           },
           {
             text: 'OK',
-            handler: (data) => resolve(data.input || null),
+            handler: data => resolve(data.input || null),
           },
         ],
         cssClass: 'custom-input-alert',
@@ -143,7 +143,7 @@ export class LoadingService {
   }
 
   private getToastColor(
-    type: 'success' | 'error' | 'warning' | 'info',
+    type: 'success' | 'error' | 'warning' | 'info'
   ): string {
     switch (type) {
       case 'success':

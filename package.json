@@ -9,7 +9,10 @@
     "build": "ng build",
     "dev": "nodemon server,js",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "lint": "eslint src/ --ext .ts,.js",
+    "lint:fix": "eslint src/ --ext .ts,.js --fix",
+    "format": "prettier --write \"src/**/*.{ts,html,scss,js}\""
   },
   "private": true,
   "dependencies": {
@@ -44,12 +47,18 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^20.1.0",
+    "@angular-eslint/eslint-plugin": "^20.4.0",
+    "@angular-eslint/eslint-plugin-template": "^20.4.0",
     "@angular/cli": "^20.1.0",
     "@angular/compiler-cli": "^20.1.0",
     "@angular/language-service": "^20.1.0",
     "@capacitor/cli": "^7.0.0",
+    "@eslint/js": "^9.38.0",
     "@ionic/angular-toolkit": "^12.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.1",
+    "@typescript-eslint/parser": "^8.46.1",
     "typescript": "~5.8.0"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "type": "module"
 }

@@ -4,7 +4,7 @@
   margin-bottom: 8px;
   border-radius: 8px;
   border: 1px solid var(--ion-color-light);
-  
+
   &:hover {
     background-color: var(--ion-color-light);
   }
@@ -72,15 +72,15 @@ ion-note {
 }
 
 // Payment method icons
-ion-icon[name="card-outline"] {
+ion-icon[name='card-outline'] {
   font-size: 24px;
 }
 
-ion-icon[name="logo-apple"] {
+ion-icon[name='logo-apple'] {
   font-size: 24px;
 }
 
-ion-icon[name="logo-google"] {
+ion-icon[name='logo-google'] {
   font-size: 24px;
 }
 
@@ -89,7 +89,7 @@ ion-icon[name="logo-google"] {
   ion-card {
     margin: 8px;
   }
-  
+
   .payment-method-item {
     --padding-start: 12px;
     --padding-end: 12px;
