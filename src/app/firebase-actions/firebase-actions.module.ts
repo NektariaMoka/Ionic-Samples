@@ -7,12 +7,7 @@ import { FirebaseActionsComponent } from './firebase-actions.component';
 
 @NgModule({
   declarations: [FirebaseActionsComponent],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    IonicModule
-  ],
-  exports: [FirebaseActionsComponent]
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonicModule],
+  exports: [FirebaseActionsComponent],
 })
-export class FirebaseActionsModule { }
+export class FirebaseActionsModule {}

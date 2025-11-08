@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IonicModule, MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 

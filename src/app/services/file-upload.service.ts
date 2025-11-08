@@ -6,9 +6,8 @@ import {
   getDownloadURL,
   deleteObject,
 } from '@angular/fire/storage';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { FileUploadResult } from '../models/user.interface';
-import { LoadingService } from './loading.service';
 
 @Injectable({
   providedIn: 'root',
@@ -39,32 +38,32 @@ export class FileUploadService {
 
   async uploadProfileImage(
     userId: string,
-    file: File,
+    file: File
   ): Promise<FileUploadResult> {
     return this.uploadFile(
       file,
       `users/${userId}/profile/avatar`,
       this.ALLOWED_IMAGE_TYPES,
-      this.MAX_IMAGE_SIZE,
+      this.MAX_IMAGE_SIZE
     );
   }
 
   async uploadCoverImage(
     userId: string,
-    file: File,
+    file: File
   ): Promise<FileUploadResult> {
     return this.uploadFile(
       file,
       `users/${userId}/profile/cover`,
       this.ALLOWED_IMAGE_TYPES,
-      this.MAX_IMAGE_SIZE,
+      this.MAX_IMAGE_SIZE
     );
   }
 
   async uploadDocument(
     userId: string,
     file: File,
-    category: string = 'documents',
+    category: string = 'documents'
   ): Promise<FileUploadResult> {
     const allowedTypes = [
       ...this.ALLOWED_IMAGE_TYPES,
@@ -74,7 +73,7 @@ export class FileUploadService {
       file,
       `users/${userId}/${category}/${Date.now()}_${file.name}`,
       allowedTypes,
-      this.MAX_FILE_SIZE,
+      this.MAX_FILE_SIZE
     );
   }
 
@@ -82,7 +81,7 @@ export class FileUploadService {
     file: File,
     path: string,
     allowedTypes: string[],
-    maxSize: number,
+    maxSize: number
   ): Promise<FileUploadResult> {
     try {
       // Validate file
@@ -97,16 +96,16 @@ export class FileUploadService {
       // Start upload
       const uploadTask = uploadBytesResumable(storageRef, file);
 
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         uploadTask.on(
           'state_changed',
-          (snapshot) => {
+          snapshot => {
             // Progress monitoring
             const progress =
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             this.uploadProgressSubject.next(progress);
           },
-          (error) => {
+          error => {
             // Handle upload errors
             console.error('Upload error:', error);
             this.uploadProgressSubject.next(0);
@@ -121,10 +120,10 @@ export class FileUploadService {
               const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
               this.uploadProgressSubject.next(100);
               resolve({ success: true, downloadURL });
-            } catch (error) {
+            } catch (_error) {
               resolve({ success: false, error: 'Failed to get download URL' });
             }
-          },
+          }
         );
       });
     } catch (error: any) {
@@ -146,7 +145,7 @@ export class FileUploadService {
   validateFile(
     file: File,
     allowedTypes: string[],
-    maxSize: number,
+    maxSize: number
   ): { isValid: boolean; error?: string } {
     // Check file size
     if (file.size > maxSize) {
@@ -208,7 +207,7 @@ export class FileUploadService {
   // Utility method to create file input element
   createFileInput(
     accept: string = '*',
-    multiple: boolean = false,
+    multiple: boolean = false
   ): HTMLInputElement {
     const input = document.createElement('input');
     input.type = 'file';
@@ -221,9 +220,9 @@ export class FileUploadService {
   // Utility method to trigger file selection
   selectFile(
     accept: string = '*',
-    multiple: boolean = false,
+    multiple: boolean = false
   ): Promise<FileList | null> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const input = this.createFileInput(accept, multiple);
       input.onchange = () => resolve(input.files);
       input.onclick = () => {

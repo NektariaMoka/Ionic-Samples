@@ -53,10 +53,10 @@ export class LoginSignupTemplate1Component {
         this.router.navigate(['/home']);
       } else {
         await this.loadingService.showToast(
-          result.error || 'Anonymous sign in failed',
+          result.error || 'Anonymous sign in failed'
         );
       }
-    } catch (error) {
+    } catch (_error) {
       await this.loadingService.hideLoading();
       await this.loadingService.showToast('An unexpected error occurred');
     }
@@ -85,7 +85,7 @@ export class LoginSignupTemplate1Component {
       } else {
         await this.loadingService.showToast(result.error || 'Sign in failed');
       }
-    } catch (error) {
+    } catch (_error) {
       await this.loadingService.hideLoading();
       await this.loadingService.showToast('An unexpected error occurred');
     }
@@ -114,13 +114,13 @@ export class LoginSignupTemplate1Component {
 
       if (result.success) {
         await this.loadingService.showToast(
-          'Account created! Please check your email for verification.',
+          'Account created! Please check your email for verification.'
         );
         this.router.navigate(['/home']);
       } else {
         await this.loadingService.showToast(result.error || 'Sign up failed');
       }
-    } catch (error) {
+    } catch (_error) {
       await this.loadingService.hideLoading();
       await this.loadingService.showToast('An unexpected error occurred');
     }
@@ -129,14 +129,14 @@ export class LoginSignupTemplate1Component {
   async forgotPassword() {
     if (!this.email.trim()) {
       await this.loadingService.showToast(
-        'Please enter your email address first',
+        'Please enter your email address first'
       );
       return;
     }
 
     const confirmed = await this.loadingService.showConfirmAlert(
       'Reset Password',
-      `Send password reset email to ${this.email}?`,
+      `Send password reset email to ${this.email}?`
     );
 
     if (!confirmed) return;
@@ -152,10 +152,10 @@ export class LoginSignupTemplate1Component {
         await this.loadingService.showToast('Password reset email sent!');
       } else {
         await this.loadingService.showToast(
-          result || 'Failed to send reset email',
+          result || 'Failed to send reset email'
         );
       }
-    } catch (error) {
+    } catch (_error) {
       await this.loadingService.hideLoading();
       await this.loadingService.showToast('An unexpected error occurred');
     }

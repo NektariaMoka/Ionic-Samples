@@ -6,7 +6,7 @@ export class GlobalService {
   private toastController = inject(ToastController);
   checkEmail(email: string) {
     if (email) {
-      let patternEmail =
+      const patternEmail =
         /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
       return email.search(patternEmail) != -1;
     } else {
