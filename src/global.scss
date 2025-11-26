@@ -1,4 +1,6 @@
 /* Core CSS required for Ionic components to work properly */
+
+@use "swiper/css" as *;
 @import "@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
@@ -15,9 +17,8 @@
 @import "@ionic/angular/css/flex-utils.css";
 @import "assets/animate.css";
 /* Swiper core styles */
-@import "swiper/css";
-@import "swiper/css/navigation";
-@import "swiper/css/pagination";
+
+
 
 @media (prefers-color-scheme: light) {
   /*

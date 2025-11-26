@@ -6,11 +6,26 @@ import { environment } from '../../../environments/environment';
 import { CapacitorHttp, HttpResponse } from '@capacitor/core';
 import { Capacitor } from '@capacitor/core';
 import { FormsModule } from '@angular/forms';
+import {
+  DatePipe,
+  DecimalPipe,
+  NgForOf,
+  NgIf,
+  TitleCasePipe,
+} from '@angular/common';
 @Component({
   selector: 'app-stripe-pay',
   templateUrl: './stripe-pay.component.html',
   styleUrls: ['./stripe-pay.component.scss'],
-  imports: [IonicModule, FormsModule],
+  imports: [
+    IonicModule,
+    FormsModule,
+    DecimalPipe,
+    DatePipe,
+    TitleCasePipe,
+    NgIf,
+    NgForOf,
+  ],
   providers: [GlobalService],
 })
 export class StripePayComponent {
@@ -32,7 +47,7 @@ export class StripePayComponent {
     this.GROUP_SEPARATOR = ' ';
     this.paymentHistory = [];
     this.isLoading = false;
-    
+
     this.initializeStripe();
     this.loadPaymentHistory();
   }
@@ -41,7 +56,7 @@ export class StripePayComponent {
     Stripe.initialize({
       publishableKey: environment.STRIPE_SK,
     });
-    
+
     Stripe.addListener(PaymentSheetEventsEnum.Completed, () => {
       console.log('Payment completed');
       this.addToPaymentHistory({
@@ -49,7 +64,7 @@ export class StripePayComponent {
         currency: this.currency,
         status: 'completed',
         timestamp: new Date(),
-        method: 'card'
+        method: 'card',
       });
       this.globalService.presentToast(
         'Payment completed successfully',
@@ -113,7 +128,11 @@ export class StripePayComponent {
 
   async handleApplePay() {
     try {
-      this.globalService.presentToast('Apple Pay not available on this device', 'bottom', 2000);
+      this.globalService.presentToast(
+        'Apple Pay not available on this device',
+        'bottom',
+        2000,
+      );
       // In a real implementation, you would check for Apple Pay availability
       // and use the appropriate Stripe Apple Pay methods
     } catch (error) {
@@ -123,7 +142,11 @@ export class StripePayComponent {
 
   async handleGooglePay() {
     try {
-      this.globalService.presentToast('Google Pay not available on this device', 'bottom', 2000);
+      this.globalService.presentToast(
+        'Google Pay not available on this device',
+        'bottom',
+        2000,
+      );
       // In a real implementation, you would check for Google Pay availability
       // and use the appropriate Stripe Google Pay methods
     } catch (error) {
@@ -133,22 +156,26 @@ export class StripePayComponent {
 
   async createPaymentSheet() {
     if (this.paymentAmount <= 0) {
-      this.globalService.presentToast('Please enter a valid amount', 'bottom', 2000);
+      this.globalService.presentToast(
+        'Please enter a valid amount',
+        'bottom',
+        2000,
+      );
       return;
     }
 
     this.isLoading = true;
-    
+
     try {
       this.globalService.presentToast('Creating payment...', 'bottom', 1000);
-      
+
       const options = {
         url: 'http://localhost:4242/paymentsheet',
         headers: { 'Content-Type': 'application/json' },
-        data: { 
+        data: {
           amount: this.paymentAmount * 100, // Convert to cents
           currency: this.currency.toLowerCase(),
-          customerEmail: 'user@example.com'
+          customerEmail: 'user@example.com',
         },
       };
 
@@ -176,7 +203,7 @@ export class StripePayComponent {
       this.globalService.presentToast(
         'Error creating payment. Please try again.',
         'bottom',
-        3000
+        3000,
       );
     } finally {
       this.isLoading = false;
@@ -186,20 +213,20 @@ export class StripePayComponent {
     try {
       console.log('Presenting payment sheet');
       const result = await Stripe.presentPaymentSheet();
-      
+
       if (result.paymentResult) {
         console.log('Payment successful:', result);
         this.globalService.presentToast(
           'Payment completed successfully!',
           'bottom',
-          3000
+          3000,
         );
       } else {
         console.log('Payment failed or cancelled:', result);
         this.globalService.presentToast(
           'Payment was cancelled or failed',
           'bottom',
-          3000
+          3000,
         );
       }
     } catch (error) {
@@ -207,7 +234,7 @@ export class StripePayComponent {
       this.globalService.presentToast(
         'Error processing payment. Please try again.',
         'bottom',
-        3000
+        3000,
       );
     }
   }

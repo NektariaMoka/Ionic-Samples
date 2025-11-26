@@ -1,0 +1,239 @@
+.login-content {
+  --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.login-card {
+  background: white;
+  border-radius: 24px;
+  padding: 40px 32px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 32px;
+
+  h1 {
+    font-size: 32px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+  }
+
+  p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+  }
+}
+
+.login-form {
+  .form-group {
+    margin-bottom: 20px;
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 8px;
+    }
+
+    .input-item {
+      --background: #f5f5f5;
+      --border-radius: 12px;
+      --padding-start: 16px;
+      --padding-end: 16px;
+      --inner-padding-end: 0;
+      border-radius: 12px;
+
+      ion-input {
+        --color: #333;
+        font-size: 15px;
+      }
+
+      .password-icon {
+        font-size: 20px;
+        color: #999;
+        cursor: pointer;
+        margin-left: 8px;
+      }
+    }
+  }
+
+  .form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    .checkbox-item {
+      --background: transparent;
+      --padding-start: 0;
+      --inner-padding-end: 0;
+      --min-height: 32px;
+
+      ion-checkbox {
+        --size: 18px;
+        --checkbox-background-checked: #4267b2;
+        margin-right: 8px;
+      }
+
+      ion-label {
+        font-size: 13px;
+        color: #666;
+      }
+    }
+
+    .forgot-password {
+      font-size: 13px;
+      color: #4267b2;
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .login-button {
+    --background: #4267b2;
+    --background-hover: #3a5b9d;
+    --border-radius: 12px;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: none;
+    margin-bottom: 24px;
+    letter-spacing: 0.3px;
+  }
+
+  .divider {
+    text-align: center;
+    margin: 24px 0;
+    position: relative;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: #e0e0e0;
+    }
+
+    &::before {
+      left: 0;
+    }
+
+    &::after {
+      right: 0;
+    }
+
+    span {
+      font-size: 13px;
+      color: #999;
+      background: white;
+      padding: 0 16px;
+    }
+  }
+
+  .social-login {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+
+    .social-button {
+      --background: #f5f5f5;
+      --background-hover: #e8e8e8;
+      --border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      margin: 0;
+
+      ion-icon {
+        font-size: 24px;
+        color: #666;
+      }
+
+      &:nth-child(1) ion-icon {
+        color: #db4437;
+      }
+
+      &:nth-child(2) ion-icon {
+        color: #4267b2;
+      }
+
+      &:nth-child(3) ion-icon {
+        color: #1da1f2;
+      }
+    }
+  }
+
+  .signup-link {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+
+    a {
+      color: #4267b2;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.biometric-section {
+  margin-top: 40px;
+  text-align: center;
+
+  .biometric-button {
+    --background: rgba(255, 255, 255, 0.2);
+    --background-hover: rgba(255, 255, 255, 0.3);
+    --border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 12px;
+    backdrop-filter: blur(10px);
+
+    ion-icon {
+      font-size: 48px;
+      color: white;
+    }
+  }
+
+  .biometric-text {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 32px 24px;
+  }
+
+  .login-header h1 {
+    font-size: 28px;
+  }
+}

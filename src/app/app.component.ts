@@ -19,6 +19,6 @@ export class AppComponent {
       this.showChildren = title;
     }
   }
-  public beginnerMenu: Array<BeginnerMenu> = [];
+  public beginnerMenu: Array<BeginnerMenu> = environment.BEGINNER_SIDEMENU;
   redirectPage() {}
 }

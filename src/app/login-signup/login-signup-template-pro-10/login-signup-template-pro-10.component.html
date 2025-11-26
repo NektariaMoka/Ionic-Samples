@@ -1,3 +1,84 @@
-<p>
-  login-signup-template-pro-10 works!
-</p>
+<ion-content class="login-content">
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <h1>Login</h1>
+        <p>Please Login to continue</p>
+      </div>
+
+      <div class="login-form">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <ion-item lines="none" class="input-item">
+            <ion-input
+              type="email"
+              placeholder="example@mail.com"
+              [(ngModel)]="email"
+            ></ion-input>
+          </ion-item>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <ion-item lines="none" class="input-item">
+            <ion-input
+              [type]="showPassword ? 'text' : 'password'"
+              placeholder="••••••••••••"
+              [(ngModel)]="password"
+            ></ion-input>
+            <ion-icon
+              slot="end"
+              [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+              class="password-icon"
+              (click)="togglePasswordVisibility()"
+            ></ion-icon>
+          </ion-item>
+        </div>
+
+        <div class="form-options">
+          <ion-item lines="none" class="checkbox-item">
+            <ion-checkbox slot="start" [(ngModel)]="rememberMe"></ion-checkbox>
+            <ion-label>Remember me</ion-label>
+          </ion-item>
+          <a class="forgot-password" (click)="onForgotPassword()">Forgot Password?</a>
+        </div>
+
+        <ion-button
+          expand="block"
+          class="login-button"
+          (click)="onLogin()"
+        >
+          Login
+        </ion-button>
+
+        <div class="divider">
+          <span>or</span>
+        </div>
+
+        <div class="social-login">
+          <ion-button fill="clear" class="social-button" (click)="onSocialLogin('Google')">
+            <ion-icon name="logo-google"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" class="social-button" (click)="onSocialLogin('Facebook')">
+            <ion-icon name="logo-facebook"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" class="social-button" (click)="onSocialLogin('Twitter')">
+            <ion-icon name="logo-twitter"></ion-icon>
+          </ion-button>
+        </div>
+
+        <div class="signup-link">
+          <span>Don't have an account? </span>
+          <a (click)="onSignUp()">Sign up</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="biometric-section">
+      <ion-button fill="clear" class="biometric-button" (click)="onBiometricLogin()">
+        <ion-icon name="finger-print-outline"></ion-icon>
+      </ion-button>
+      <p class="biometric-text">Please put your finger on screen</p>
+    </div>
+  </div>
+</ion-content>
